@@ -8,4 +8,5 @@ yarn start
 ```
 
 # ドキュメント
-- https://paper.dropbox.com/doc/--AXiZNqlbWYdZ8WzxxReBNl1EAg-JyvjOr2aOlyCvR71ib6B2
+- Paper https://paper.dropbox.com/doc/--AXiZNqlbWYdZ8WzxxReBNl1EAg-JyvjOr2aOlyCvR71ib6B2
+- FIGMA https://www.figma.com/file/M9vMJf7iagWCQDGG0ZiClvxf/ScrumPlannningPorker?node-id=0%3A1
