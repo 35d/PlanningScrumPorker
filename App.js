@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+/* eslint-disable react/jsx-filename-extension */
+import React from 'react';
 import Home from './src/ui/containers/Home';
 
-export default class App extends Component {
-  render() {
-    return (
-      <Home />
-    );
-  }
+const App = function app() {
+  return (
+    <Home />
+  );
 };
+
+export default App;

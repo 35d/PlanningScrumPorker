@@ -19,11 +19,10 @@ module.exports = {
 		"react",
 		"react-native",
 	],
+	"resolve": {
+		"extensions": ['', '.js', '.jsx', '.ts', '.tsx'],
+		"src": path.resolve(__dirname, './src')
+	},
 	"rules": {
-		// "no-use-before-define": ["error"]
-		// "resolve": {
-		// 	"extensions": ['', '.js', '.jsx', '.ts', '.tsx'],
-		// 	"src": path.resolve(__dirname, './src')
-		// }
 	}
 };
