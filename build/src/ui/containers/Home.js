@@ -19,53 +19,45 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importDefault(require("react"));
 var react_2 = require("react");
 var react_native_1 = require("react-native");
+var Card_1 = __importDefault(require("../components/Card"));
+var FiboArray_1 = __importDefault(require("../../util/FiboArray"));
 var styles = react_native_1.StyleSheet.create({
     container: {
         flex: 1,
+        paddingTop: 40,
         backgroundColor: '#00478F',
         alignItems: 'center',
         justifyContent: 'center',
     },
-    card: {
-        backgroundColor: '#FFF',
-        height: 30,
-        width: 30,
+    title: {
+        color: '#FFF',
+        fontSize: 26,
+        fontWeight: 'bold',
+        marginBottom: 45,
+    },
+    body: {
+        justifyContent: 'center',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
     },
 });
-var Card = function (props) { return (react_1.default.createElement(react_native_1.View, { style: styles.card },
-    react_1.default.createElement(react_native_1.Text, null, props.point))); };
-var fiboArray = [
-    '0',
-    '1',
-    '2',
-    '3',
-    '5',
-    '8',
-    '13',
-    '21',
-    '34',
-    '55',
-    '89',
-    '144',
-    '？',
-    '∞',
-    '☕',
-];
 var Home = /** @class */ (function (_super) {
     __extends(Home, _super);
     function Home() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.renderCards = function () {
             var cards = [];
-            fiboArray.forEach(function (item) {
-                cards.push(Card({ point: item }));
+            FiboArray_1.default.forEach(function (item) {
+                cards.push(Card_1.default({ point: item }));
             });
             return cards;
         };
         return _this;
     }
     Home.prototype.render = function () {
-        return react_1.default.createElement(react_native_1.View, { style: styles.container }, this.renderCards());
+        return (react_1.default.createElement(react_native_1.View, { style: styles.container },
+            react_1.default.createElement(react_native_1.Text, { style: styles.title }, "Fibonacci"),
+            react_1.default.createElement(react_native_1.View, { style: styles.body }, this.renderCards())));
     };
     return Home;
 }(react_2.Component));

@@ -1,48 +1,29 @@
 import React from 'react'
 import { Component } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
+import Card from '../components/Card'
+import fiboArray from '../../util/FiboArray'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 40,
     backgroundColor: '#00478F',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  card: {
-    backgroundColor: '#FFF',
-    height: 30,
-    width: 30,
+  title: {
+    color: '#FFF',
+    fontSize: 26,
+    fontWeight: 'bold',
+    marginBottom: 45,
+  },
+  body: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
 })
-
-interface CardProps {
-  point: string
-}
-
-const Card = (props: CardProps) => (
-  <View style={styles.card}>
-    <Text>{props.point}</Text>
-  </View>
-)
-
-const fiboArray = [
-  '0',
-  '1',
-  '2',
-  '3',
-  '5',
-  '8',
-  '13',
-  '21',
-  '34',
-  '55',
-  '89',
-  '144',
-  '？',
-  '∞',
-  '☕',
-]
 
 export default class Home extends Component {
   renderCards = () => {
@@ -53,6 +34,11 @@ export default class Home extends Component {
     return cards
   }
   render() {
-    return <View style={styles.container}>{this.renderCards()}</View>
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>Fibonacci</Text>
+        <View style={styles.body}>{this.renderCards()}</View>
+      </View>
+    )
   }
 }
