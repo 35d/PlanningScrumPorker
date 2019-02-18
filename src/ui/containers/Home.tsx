@@ -1,6 +1,6 @@
-import React from 'react';
-import { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react'
+import { Component } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
 
 const styles = StyleSheet.create({
   container: {
@@ -9,12 +9,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+})
 
 export default class Home extends Component {
   sum = (num1: number, num2: number) => {
-    return num1 + num2;
-  }  
+    return num1 + num2
+  }
 
   render() {
     return (
@@ -22,6 +22,6 @@ export default class Home extends Component {
         <Text>Open up Home.js to start working on your app!</Text>
         <Text>{this.sum(1, 2)}</Text>
       </View>
-    );
+    )
   }
 }
