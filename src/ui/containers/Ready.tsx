@@ -50,6 +50,7 @@ class ReadyComponent extends Component<Props> {
                 onPress: this.props.onPress,
                 point: this.props.point,
               },
+              navigationBarHidden: true,
             })
           }
         >
@@ -73,6 +74,7 @@ export default class Ready extends Component<Props> {
             onPress: this.props.onPress,
             point: this.props.point,
           },
+          navigationBarHidden: true,
         }}
         style={{ flex: 1 }}
       />

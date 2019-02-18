@@ -57,6 +57,7 @@ var ReadyComponent = /** @class */ (function (_super) {
                             onPress: _this.props.onPress,
                             point: _this.props.point,
                         },
+                        navigationBarHidden: true,
                     });
                 } },
                 react_1.default.createElement(react_native_1.View, null,
@@ -77,6 +78,7 @@ var Ready = /** @class */ (function (_super) {
                     onPress: this.props.onPress,
                     point: this.props.point,
                 },
+                navigationBarHidden: true,
             }, style: { flex: 1 } }));
     };
     return Ready;
