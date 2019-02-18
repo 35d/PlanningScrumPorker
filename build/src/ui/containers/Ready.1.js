@@ -20,8 +20,6 @@ var react_1 = __importDefault(require("react"));
 var react_2 = require("react");
 var react_native_1 = require("react-native");
 var BigCard_1 = __importDefault(require("../components/BigCard"));
-var Result_1 = __importDefault(require("../containers/Result"));
-var react_native_2 = require("react-native");
 var styles = react_native_1.StyleSheet.create({
     container: {
         flex: 1,
@@ -42,42 +40,16 @@ var styles = react_native_1.StyleSheet.create({
         flexWrap: 'wrap',
     },
 });
-var ReadyComponent = /** @class */ (function (_super) {
-    __extends(ReadyComponent, _super);
-    function ReadyComponent() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    ReadyComponent.prototype.render = function () {
-        var _this = this;
-        return (react_1.default.createElement(react_native_1.View, { style: styles.container },
-            react_1.default.createElement(react_native_1.TouchableWithoutFeedback, { onPress: function () {
-                    return _this.props.navigator.push({
-                        component: Result_1.default,
-                        passProps: {
-                            onPress: _this.props.onPress,
-                            point: _this.props.point,
-                        },
-                    });
-                } },
-                react_1.default.createElement(react_native_1.View, null,
-                    react_1.default.createElement(BigCard_1.default, { point: 'READY!' })))));
-    };
-    return ReadyComponent;
-}(react_2.Component));
 var Ready = /** @class */ (function (_super) {
     __extends(Ready, _super);
     function Ready() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Ready.prototype.render = function () {
-        return (react_1.default.createElement(react_native_2.NavigatorIOS, { initialRoute: {
-                component: ReadyComponent,
-                title: '',
-                passProps: {
-                    onPress: this.props.onPress,
-                    point: this.props.point,
-                },
-            }, style: { flex: 1 } }));
+        return (react_1.default.createElement(react_native_1.View, { style: styles.container },
+            react_1.default.createElement(react_native_1.TouchableWithoutFeedback, { onPress: this.props.onPress },
+                react_1.default.createElement(react_native_1.View, null,
+                    react_1.default.createElement(BigCard_1.default, { point: 'READY!' })))));
     };
     return Ready;
 }(react_2.Component));

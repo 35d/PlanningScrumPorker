@@ -9,6 +9,7 @@ const App = function app() {
       initialRoute={{
         component: Home,
         title: '',
+        navigationBarHidden: true,
       }}
       style={{ flex: 1 }}
     />

@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { TouchableWithoutFeedback, StyleSheet, Text, View } from 'react-native'
 
 const styles = StyleSheet.create({
   card: {
@@ -21,12 +21,20 @@ const styles = StyleSheet.create({
 
 interface CardProps {
   point: string
+  onPress: (point: string, modalVisible: boolean) => void
 }
 
 const Card = (props: CardProps) => (
-  <View style={styles.card} key={props.point}>
-    <Text style={styles.text}>{props.point}</Text>
-  </View>
+  <TouchableWithoutFeedback
+    onPress={() => {
+      props.onPress(props.point, true)
+    }}
+    key={props.point}
+  >
+    <View style={styles.card}>
+      <Text style={styles.text}>{props.point}</Text>
+    </View>
+  </TouchableWithoutFeedback>
 )
 
 export default Card

@@ -22,9 +22,6 @@ var styles = react_native_1.StyleSheet.create({
         color: '#00478F',
     },
 });
-var Card = function (props) { return (react_1.default.createElement(react_native_1.TouchableWithoutFeedback, { onPress: function () {
-        props.onPress(props.point, true);
-    }, key: props.point },
-    react_1.default.createElement(react_native_1.View, { style: styles.card },
-        react_1.default.createElement(react_native_1.Text, { style: styles.text }, props.point)))); };
+var Card = function (props) { return (react_1.default.createElement(react_native_1.View, { style: styles.card, key: props.point },
+    react_1.default.createElement(react_native_1.Text, { style: styles.text }, props.point))); };
 exports.default = Card;

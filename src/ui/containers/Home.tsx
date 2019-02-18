@@ -1,12 +1,6 @@
 import React from 'react'
 import { Component } from 'react'
-import {
-  Modal,
-  TouchableWithoutFeedback,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native'
+import { Modal, StyleSheet, Text, View } from 'react-native'
 import Card from '../components/Card'
 import Ready from '../containers/Ready'
 import fiboArray from '../../util/FiboArray'
@@ -14,7 +8,6 @@ import fiboArray from '../../util/FiboArray'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 40,
     backgroundColor: '#00478F',
     alignItems: 'center',
     justifyContent: 'center',
@@ -38,6 +31,7 @@ interface Props {
 
 interface State {
   modalVisible: boolean
+  point: string
 }
 
 export default class Home extends Component<Props, State> {
@@ -45,6 +39,7 @@ export default class Home extends Component<Props, State> {
     super(props)
     this.state = {
       modalVisible: false,
+      point: '',
     }
   }
 
@@ -55,30 +50,34 @@ export default class Home extends Component<Props, State> {
   renderCards = () => {
     const cards: Array<JSX.Element> = []
     fiboArray.forEach(item => {
-      cards.push(Card({ point: item }))
+      cards.push(Card({ point: item, onPress: this.onPressCard }))
     })
     return cards
+  }
+
+  onPressCard = (point: string, modalVisible: boolean) => {
+    this.setState({
+      modalVisible,
+      point,
+    })
   }
 
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Fibonacci</Text>
-        <TouchableWithoutFeedback
-          onPress={() => {
-            this.setModalVisible(true)
-          }}
-        >
-          <View style={styles.body}>{this.renderCards()}</View>
-        </TouchableWithoutFeedback>
-
+        <View style={styles.body}>{this.renderCards()}</View>
         <Modal
           animationType="slide"
           transparent={false}
           visible={this.state.modalVisible}
           onRequestClose={() => console.log('close modal')}
         >
-          <Ready onPress={() => this.setModalVisible(false)} />
+          <Ready
+            navigator={this.props.navigator}
+            onPress={() => this.setModalVisible(false)}
+            point={this.state.point}
+          />
         </Modal>
       </View>
     )
