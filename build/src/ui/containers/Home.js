@@ -39,7 +39,7 @@ var Home = /** @class */ (function (_super) {
     Home.prototype.render = function () {
         return (react_1.default.createElement(react_native_1.View, { style: styles.container },
             react_1.default.createElement(react_native_1.Text, null, "Open up Home.js to start working on your app!"),
-            react_1.default.createElement(react_native_1.Text, null, this.sum(1, 2))));
+            react_1.default.createElement(react_native_1.Text, null, this.sum(55, 2))));
     };
     return Home;
 }(react_2.Component));

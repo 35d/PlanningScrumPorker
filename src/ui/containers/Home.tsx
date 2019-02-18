@@ -20,7 +20,7 @@ export default class Home extends Component {
     return (
       <View style={styles.container}>
         <Text>Open up Home.js to start working on your app!</Text>
-        <Text>{this.sum(1, 2)}</Text>
+        <Text>{this.sum('5', 2)}</Text>
       </View>
     )
   }
