@@ -20,6 +20,7 @@ var react_1 = __importDefault(require("react"));
 var react_2 = require("react");
 var react_native_1 = require("react-native");
 var Card_1 = __importDefault(require("../components/Card"));
+var Ready_1 = __importDefault(require("../containers/Ready"));
 var FiboArray_1 = __importDefault(require("../../util/FiboArray"));
 var styles = react_native_1.StyleSheet.create({
     container: {
@@ -43,8 +44,8 @@ var styles = react_native_1.StyleSheet.create({
 });
 var Home = /** @class */ (function (_super) {
     __extends(Home, _super);
-    function Home() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
+    function Home(props) {
+        var _this = _super.call(this, props) || this;
         _this.renderCards = function () {
             var cards = [];
             FiboArray_1.default.forEach(function (item) {
@@ -52,12 +53,24 @@ var Home = /** @class */ (function (_super) {
             });
             return cards;
         };
+        _this.state = {
+            modalVisible: false,
+        };
         return _this;
     }
+    Home.prototype.setModalVisible = function (visible) {
+        this.setState({ modalVisible: visible });
+    };
     Home.prototype.render = function () {
+        var _this = this;
         return (react_1.default.createElement(react_native_1.View, { style: styles.container },
             react_1.default.createElement(react_native_1.Text, { style: styles.title }, "Fibonacci"),
-            react_1.default.createElement(react_native_1.View, { style: styles.body }, this.renderCards())));
+            react_1.default.createElement(react_native_1.TouchableWithoutFeedback, { onPress: function () {
+                    _this.setModalVisible(true);
+                } },
+                react_1.default.createElement(react_native_1.View, { style: styles.body }, this.renderCards())),
+            react_1.default.createElement(react_native_1.Modal, { animationType: "slide", transparent: false, visible: this.state.modalVisible, onRequestClose: function () { return console.log('close modal'); } },
+                react_1.default.createElement(Ready_1.default, { onPress: function () { return _this.setModalVisible(false); } }))));
     };
     return Home;
 }(react_2.Component));
