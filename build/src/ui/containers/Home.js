@@ -47,16 +47,18 @@ var Home = /** @class */ (function (_super) {
         var _this = _super.call(this, props) || this;
         _this.renderCards = function () {
             var cards = [];
-            FiboArray_1.default.forEach(function (item) {
-                cards.push(Card_1.default({ point: item, onPress: _this.onPressCard }));
+            FiboArray_1.default.forEach(function (point) {
+                cards.push(react_1.default.createElement(Card_1.default, { point: point, onPress: _this.onPressCard, key: point }));
             });
             return cards;
         };
         _this.onPressCard = function (point, modalVisible) {
-            _this.setState({
-                modalVisible: modalVisible,
-                point: point,
-            });
+            setTimeout(function () {
+                _this.setState({
+                    modalVisible: modalVisible,
+                    point: point,
+                });
+            }, 370);
         };
         _this.state = {
             modalVisible: false,
@@ -69,10 +71,10 @@ var Home = /** @class */ (function (_super) {
     };
     Home.prototype.render = function () {
         var _this = this;
-        return (react_1.default.createElement(react_native_1.View, { style: styles.container },
+        return (react_1.default.createElement(react_native_1.Animated.View, { style: styles.container },
             react_1.default.createElement(react_native_1.Text, { style: styles.title }, "Fibonacci"),
             react_1.default.createElement(react_native_1.View, { style: styles.body }, this.renderCards()),
-            react_1.default.createElement(react_native_1.Modal, { animationType: "slide", transparent: false, visible: this.state.modalVisible, onRequestClose: function () { return console.log('close modal'); } },
+            react_1.default.createElement(react_native_1.Modal, { animationType: "none", transparent: false, visible: this.state.modalVisible, onRequestClose: function () { return console.log('close modal'); } },
                 react_1.default.createElement(Ready_1.default, { navigator: this.props.navigator, onPress: function () { return _this.setModalVisible(false); }, point: this.state.point }))));
     };
     return Home;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
-import { Modal, StyleSheet, Text, View } from 'react-native';
+import { Animated, Modal, StyleSheet, Text, View } from 'react-native';
 import Card from '../components/Card';
 import Ready from '../containers/Ready';
 import fiboArray from '../../util/FiboArray';
@@ -49,26 +49,28 @@ export default class Home extends Component<Props, State> {
 
   renderCards = () => {
     const cards: Array<JSX.Element> = [];
-    fiboArray.forEach(item => {
-      cards.push(Card({ point: item, onPress: this.onPressCard }));
+    fiboArray.forEach(point => {
+      cards.push(<Card point={point} onPress={this.onPressCard} key={point} />);
     });
     return cards;
   };
 
   onPressCard = (point: string, modalVisible: boolean) => {
-    this.setState({
-      modalVisible,
-      point,
-    });
+    setTimeout(() => {
+      this.setState({
+        modalVisible,
+        point,
+      });
+    }, 370);
   };
 
   render() {
     return (
-      <View style={styles.container}>
+      <Animated.View style={styles.container}>
         <Text style={styles.title}>Fibonacci</Text>
         <View style={styles.body}>{this.renderCards()}</View>
         <Modal
-          animationType="slide"
+          animationType="none"
           transparent={false}
           visible={this.state.modalVisible}
           onRequestClose={() => console.log('close modal')}
@@ -79,7 +81,7 @@ export default class Home extends Component<Props, State> {
             point={this.state.point}
           />
         </Modal>
-      </View>
+      </Animated.View>
     );
   }
 }
