@@ -32,6 +32,7 @@ interface Props {
 interface State {
   modalVisible: boolean;
   point: string;
+  opacity: Animated.Value;
 }
 
 export default class Home extends Component<Props, State> {
@@ -40,6 +41,8 @@ export default class Home extends Component<Props, State> {
     this.state = {
       modalVisible: false,
       point: '',
+      opacity: new Animated.Value(1),
+      close: false,
     };
   }
 
@@ -50,12 +53,16 @@ export default class Home extends Component<Props, State> {
   renderCards = () => {
     const cards: Array<JSX.Element> = [];
     fiboArray.forEach(point => {
-      cards.push(<Card point={point} onPress={this.onPressCard} key={point} />);
+      cards.push(<Card point={point} onPress={this.onPressCard} key={point} opacity={this.state.opacity} resultClose={this.state.close} />);
     });
     return cards;
   };
 
   onPressCard = (point: string, modalVisible: boolean) => {
+    Animated.timing(this.state.opacity, {
+      toValue: 0,
+      duration: 400,
+    }).start();
     setTimeout(() => {
       this.setState({
         modalVisible,
@@ -64,10 +71,27 @@ export default class Home extends Component<Props, State> {
     }, 370);
   };
 
+  onPressResultCard = (modalVisible: boolean) => {
+    this.setState({
+      modalVisible,
+      close: true,
+    });
+    setTimeout(() => {
+      Animated.timing(this.state.opacity, {
+        toValue: 1,
+        duration: 400,
+      }).start();
+      this.setState({
+        close: false,
+      });
+    }, 370);
+  };
+
+
   render() {
     return (
-      <Animated.View style={styles.container}>
-        <Text style={styles.title}>Fibonacci</Text>
+      <View style={styles.container}>
+        <Animated.Text style={[styles.title, {opacity: this.state.opacity}]}>Fibonacci</Animated.Text>
         <View style={styles.body}>{this.renderCards()}</View>
         <Modal
           animationType="none"
@@ -77,11 +101,11 @@ export default class Home extends Component<Props, State> {
         >
           <Ready
             navigator={this.props.navigator}
-            onPress={() => this.setModalVisible(false)}
+            onPress={() => this.onPressResultCard(false)}
             point={this.state.point}
           />
         </Modal>
-      </Animated.View>
+      </View>
     );
   }
 }

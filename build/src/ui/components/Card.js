@@ -67,7 +67,7 @@ var Card = /** @class */ (function (_super) {
                     duration: 400,
                 }).start();
                 react_native_1.Animated.timing(_this.state.borderRadius, {
-                    toValue: 20,
+                    toValue: 38,
                     duration: 400,
                 }).start();
             });
@@ -79,10 +79,43 @@ var Card = /** @class */ (function (_super) {
             x: new react_native_1.Animated.Value(0),
             y: new react_native_1.Animated.Value(0),
             borderRadius: new react_native_1.Animated.Value(8),
+            opacity: new react_native_1.Animated.Value(1),
         };
         _this.cardRef = react_1.default.createRef();
         return _this;
     }
+    Card.prototype.componentDidUpdate = function () {
+        var _this = this;
+        // if (this.state.isExpanded && this.props.modalVisible === true) {
+        if (this.state.isExpanded === true && this.props.resultClose === true) {
+            react_native_1.Animated.parallel([
+                react_native_1.Animated.timing(this.state.width, {
+                    toValue: 77,
+                    duration: 400,
+                }),
+                react_native_1.Animated.timing(this.state.height, {
+                    toValue: 77,
+                    duration: 400,
+                }),
+                react_native_1.Animated.timing(this.state.x, {
+                    toValue: 0,
+                    duration: 400,
+                }),
+                react_native_1.Animated.timing(this.state.y, {
+                    toValue: 0,
+                    duration: 400,
+                }),
+                react_native_1.Animated.timing(this.state.borderRadius, {
+                    toValue: 8,
+                    duration: 400,
+                }),
+            ]).start(function () {
+                _this.setState({
+                    isExpanded: false,
+                });
+            });
+        }
+    };
     Card.prototype.render = function () {
         var _this = this;
         return (react_1.default.createElement(react_native_1.View, { ref: this.cardRef, style: { zIndex: this.state.isExpanded ? 1000 : 0 } },
@@ -96,24 +129,15 @@ var Card = /** @class */ (function (_super) {
                             width: this.state.width,
                             height: this.state.height,
                             position: this.state.isExpanded ? 'absolute' : 'relative',
-                            // top: this.state.isExpanded
-                            //   ? this.state.y
-                            //   : this.state.y,
-                            // left: this.state.isExpanded
-                            //   ? this.state.x
-                            //   : this.state.x,
                             top: this.state.y,
                             left: this.state.x,
                             borderRadius: this.state.borderRadius,
-                            // transform: [
-                            //   { translateX: this.state.isExpanded ? -this.state.x + ox - 17 : 0 },
-                            //   { translateY: this.state.isExpanded ? -this.state.y + oy - 128 :0 },
-                            // ],
                             zIndex: 100,
+                            opacity: this.state.isExpanded ? 1 : this.props.opacity,
                         },
                     ] },
                     react_1.default.createElement(react_native_1.Text, { style: styles.text }, this.state.isExpanded ? '' : this.props.point))),
-            this.state.isExpanded ? (react_1.default.createElement(react_native_1.View, { style: [styles.card] },
+            this.state.isExpanded ? (react_1.default.createElement(react_native_1.Animated.View, { style: [styles.card, { opacity: this.props.opacity }] },
                 react_1.default.createElement(react_native_1.Text, { style: styles.text }, this.props.point))) : null));
     };
     return Card;

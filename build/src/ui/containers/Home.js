@@ -48,11 +48,15 @@ var Home = /** @class */ (function (_super) {
         _this.renderCards = function () {
             var cards = [];
             FiboArray_1.default.forEach(function (point) {
-                cards.push(react_1.default.createElement(Card_1.default, { point: point, onPress: _this.onPressCard, key: point }));
+                cards.push(react_1.default.createElement(Card_1.default, { point: point, onPress: _this.onPressCard, key: point, opacity: _this.state.opacity, resultClose: _this.state.close }));
             });
             return cards;
         };
         _this.onPressCard = function (point, modalVisible) {
+            react_native_1.Animated.timing(_this.state.opacity, {
+                toValue: 0,
+                duration: 400,
+            }).start();
             setTimeout(function () {
                 _this.setState({
                     modalVisible: modalVisible,
@@ -60,9 +64,26 @@ var Home = /** @class */ (function (_super) {
                 });
             }, 370);
         };
+        _this.onPressResultCard = function (modalVisible) {
+            _this.setState({
+                modalVisible: modalVisible,
+                close: true,
+            });
+            setTimeout(function () {
+                react_native_1.Animated.timing(_this.state.opacity, {
+                    toValue: 1,
+                    duration: 400,
+                }).start();
+                _this.setState({
+                    close: false,
+                });
+            }, 370);
+        };
         _this.state = {
             modalVisible: false,
             point: '',
+            opacity: new react_native_1.Animated.Value(1),
+            close: false,
         };
         return _this;
     }
@@ -71,11 +92,11 @@ var Home = /** @class */ (function (_super) {
     };
     Home.prototype.render = function () {
         var _this = this;
-        return (react_1.default.createElement(react_native_1.Animated.View, { style: styles.container },
-            react_1.default.createElement(react_native_1.Text, { style: styles.title }, "Fibonacci"),
+        return (react_1.default.createElement(react_native_1.View, { style: styles.container },
+            react_1.default.createElement(react_native_1.Animated.Text, { style: [styles.title, { opacity: this.state.opacity }] }, "Fibonacci"),
             react_1.default.createElement(react_native_1.View, { style: styles.body }, this.renderCards()),
             react_1.default.createElement(react_native_1.Modal, { animationType: "none", transparent: false, visible: this.state.modalVisible, onRequestClose: function () { return console.log('close modal'); } },
-                react_1.default.createElement(Ready_1.default, { navigator: this.props.navigator, onPress: function () { return _this.setModalVisible(false); }, point: this.state.point }))));
+                react_1.default.createElement(Ready_1.default, { navigator: this.props.navigator, onPress: function () { return _this.onPressResultCard(false); }, point: this.state.point }))));
     };
     return Home;
 }(react_2.Component));

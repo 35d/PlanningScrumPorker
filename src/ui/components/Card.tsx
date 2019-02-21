@@ -33,6 +33,8 @@ const styles = StyleSheet.create({
 interface Props {
   point: string;
   onPress: (point: string, modalVisible: boolean) => void;
+  opacity: number;
+  modalVisible: boolean;
 }
 
 interface State {
@@ -42,6 +44,7 @@ interface State {
   x: Animated.Value;
   y: Animated.Value;
   borderRadius: Animated.Value;
+  opacity: Animated.Value;
 }
 
 export default class Card extends Component<Props, State> {
@@ -54,8 +57,41 @@ export default class Card extends Component<Props, State> {
       x: new Animated.Value(0),
       y: new Animated.Value(0),
       borderRadius: new Animated.Value(8),
+      opacity: new Animated.Value(1),
     };
     this.cardRef = React.createRef();
+  }
+
+  componentDidUpdate() {
+    // if (this.state.isExpanded && this.props.modalVisible === true) {
+    if (this.state.isExpanded === true && this.props.resultClose === true) {
+      Animated.parallel([
+        Animated.timing(this.state.width, {
+          toValue: 77,
+          duration: 400,
+        }),
+        Animated.timing(this.state.height, {
+          toValue: 77,
+          duration: 400,
+        }),
+        Animated.timing(this.state.x, {
+          toValue: 0,
+          duration: 400,
+        }),
+        Animated.timing(this.state.y, {
+          toValue: 0,
+          duration: 400,
+        }),
+        Animated.timing(this.state.borderRadius, {
+          toValue: 8,
+          duration: 400,
+        }),
+      ]).start(() => {
+        this.setState({
+          isExpanded: false,
+        });
+      });
+    }
   }
 
   expandCard = () => {
@@ -80,7 +116,7 @@ export default class Card extends Component<Props, State> {
         duration: 400,
       }).start();
       Animated.timing(this.state.borderRadius, {
-        toValue: 20,
+        toValue: 38,
         duration: 400,
       }).start();
     });
@@ -105,31 +141,24 @@ export default class Card extends Component<Props, State> {
                 width: this.state.width,
                 height: this.state.height,
                 position: this.state.isExpanded ? 'absolute' : 'relative',
-                // top: this.state.isExpanded
-                //   ? this.state.y
-                //   : this.state.y,
-                // left: this.state.isExpanded
-                //   ? this.state.x
-                //   : this.state.x,
                 top: this.state.y,
                 left: this.state.x,
                 borderRadius: this.state.borderRadius,
-                // transform: [
-                //   { translateX: this.state.isExpanded ? -this.state.x + ox - 17 : 0 },
-                //   { translateY: this.state.isExpanded ? -this.state.y + oy - 128 :0 },
-                // ],
                 zIndex: 100,
+                opacity: this.state.isExpanded ? 1 : this.props.opacity,
               },
             ]}
           >
-            <Text style={styles.text}>{this.state.isExpanded ? '' : this.props.point}</Text>
+            <Text style={styles.text}>
+              {this.state.isExpanded ? '' : this.props.point}
+            </Text>
             {/*{true && (<Text style={styles.text}>{this.props.point}</Text>)}*/}
           </Animated.View>
         </TouchableWithoutFeedback>
         {this.state.isExpanded ? (
-          <View style={[styles.card]} >
+          <Animated.View style={[styles.card, { opacity: this.props.opacity }]}>
             <Text style={styles.text}>{this.props.point}</Text>
-          </View>
+          </Animated.View>
         ) : null}
       </View>
     );
