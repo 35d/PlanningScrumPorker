@@ -1,9 +1,9 @@
-import React from 'react'
-import { Component } from 'react'
-import { Modal, StyleSheet, Text, View } from 'react-native'
-import Card from '../components/Card'
-import Ready from '../containers/Ready'
-import fiboArray from '../../util/FiboArray'
+import React from 'react';
+import { Component } from 'react';
+import { Modal, StyleSheet, Text, View } from 'react-native';
+import Card from '../components/Card';
+import Ready from '../containers/Ready';
+import fiboArray from '../../util/FiboArray';
 
 const styles = StyleSheet.create({
   container: {
@@ -23,44 +23,44 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
-})
+});
 
 interface Props {
-  navigator: any
+  navigator: any;
 }
 
 interface State {
-  modalVisible: boolean
-  point: string
+  modalVisible: boolean;
+  point: string;
 }
 
 export default class Home extends Component<Props, State> {
   constructor(props: Props) {
-    super(props)
+    super(props);
     this.state = {
       modalVisible: false,
       point: '',
-    }
+    };
   }
 
   setModalVisible(visible: boolean) {
-    this.setState({ modalVisible: visible })
+    this.setState({ modalVisible: visible });
   }
 
   renderCards = () => {
-    const cards: Array<JSX.Element> = []
+    const cards: Array<JSX.Element> = [];
     fiboArray.forEach(item => {
-      cards.push(Card({ point: item, onPress: this.onPressCard }))
-    })
-    return cards
-  }
+      cards.push(Card({ point: item, onPress: this.onPressCard }));
+    });
+    return cards;
+  };
 
   onPressCard = (point: string, modalVisible: boolean) => {
     this.setState({
       modalVisible,
       point,
-    })
-  }
+    });
+  };
 
   render() {
     return (
@@ -80,6 +80,6 @@ export default class Home extends Component<Props, State> {
           />
         </Modal>
       </View>
-    )
+    );
   }
 }
