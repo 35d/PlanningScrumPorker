@@ -45,32 +45,35 @@ var Card = /** @class */ (function (_super) {
     __extends(Card, _super);
     function Card(props) {
         var _this = _super.call(this, props) || this;
+        _this.cardRef = react_1.createRef();
         _this.expandCard = function () {
             _this.setState({
                 isExpanded: true,
             });
-            _this.cardRef.current.measure(function (x, y) {
-                react_native_1.Animated.timing(_this.state.width, {
-                    toValue: 307,
-                    duration: 400,
-                }).start();
-                react_native_1.Animated.timing(_this.state.height, {
-                    toValue: 307,
-                    duration: 400,
-                }).start();
-                react_native_1.Animated.timing(_this.state.x, {
-                    toValue: -x + ox - 17,
-                    duration: 400,
-                }).start();
-                react_native_1.Animated.timing(_this.state.y, {
-                    toValue: -y + oy - 145,
-                    duration: 400,
-                }).start();
-                react_native_1.Animated.timing(_this.state.borderRadius, {
-                    toValue: 38,
-                    duration: 400,
-                }).start();
-            });
+            if (_this.cardRef.current) {
+                _this.cardRef.current.measure(function (x, y) {
+                    react_native_1.Animated.timing(_this.state.width, {
+                        toValue: 307,
+                        duration: 400,
+                    }).start();
+                    react_native_1.Animated.timing(_this.state.height, {
+                        toValue: 307,
+                        duration: 400,
+                    }).start();
+                    react_native_1.Animated.timing(_this.state.x, {
+                        toValue: -x + ox - 17,
+                        duration: 400,
+                    }).start();
+                    react_native_1.Animated.timing(_this.state.y, {
+                        toValue: -y + oy - 145,
+                        duration: 400,
+                    }).start();
+                    react_native_1.Animated.timing(_this.state.borderRadius, {
+                        toValue: 38,
+                        duration: 400,
+                    }).start();
+                });
+            }
         };
         _this.state = {
             width: new react_native_1.Animated.Value(77),
@@ -81,12 +84,10 @@ var Card = /** @class */ (function (_super) {
             borderRadius: new react_native_1.Animated.Value(8),
             opacity: new react_native_1.Animated.Value(1),
         };
-        _this.cardRef = react_1.default.createRef();
         return _this;
     }
     Card.prototype.componentDidUpdate = function () {
         var _this = this;
-        // if (this.state.isExpanded && this.props.modalVisible === true) {
         if (this.state.isExpanded === true && this.props.resultClose === true) {
             react_native_1.Animated.parallel([
                 react_native_1.Animated.timing(this.state.width, {

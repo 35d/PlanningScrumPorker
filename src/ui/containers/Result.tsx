@@ -1,13 +1,12 @@
-import React from 'react'
-import { Component } from 'react'
+import React from 'react';
+import { Component } from 'react';
 import {
   TouchableWithoutFeedback,
   StyleSheet,
-  Text,
   View,
   GestureResponderEvent,
-} from 'react-native'
-import BigCard from '../components/BigCard'
+} from 'react-native';
+import BigCard from '../components/BigCard';
 
 const styles = StyleSheet.create({
   container: {
@@ -28,10 +27,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
-})
+});
 
 interface Props {
-  onPress: (event: GestureResponderEvent) => void
+  onPress: (event: GestureResponderEvent) => void;
+  point: string;
 }
 
 export default class Result extends Component<Props> {
@@ -44,6 +44,6 @@ export default class Result extends Component<Props> {
           </View>
         </TouchableWithoutFeedback>
       </View>
-    )
+    );
   }
 }
