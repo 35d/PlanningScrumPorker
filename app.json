@@ -6,7 +6,6 @@
     "sdkVersion": "32.0.0",
     "platforms": ["ios", "android"],
     "version": "1.0.0",
-    "bundleIdentifier": "jp.co.35d.planningscrumporker",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -19,7 +18,8 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "jp.co.35d.planningscrumporker"
     },
     "packagerOpts": {
       "sourceExts": ["ts", "tsx"],
