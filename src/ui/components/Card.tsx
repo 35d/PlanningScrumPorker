@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import {
   Animated,
   TouchableWithoutFeedback,
@@ -6,7 +6,6 @@ import {
   Text,
   View,
   Dimensions,
-  LayoutAnimation,
 } from 'react-native';
 
 const ox = (Dimensions.get('window').width - 307) / 2;
@@ -33,8 +32,8 @@ const styles = StyleSheet.create({
 interface Props {
   point: string;
   onPress: (point: string, modalVisible: boolean) => void;
-  opacity: number;
-  modalVisible: boolean;
+  opacity: Animated.Value;
+  resultClose: boolean;
 }
 
 interface State {
@@ -48,6 +47,8 @@ interface State {
 }
 
 export default class Card extends Component<Props, State> {
+  private cardRef = createRef<View>();
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -59,11 +60,9 @@ export default class Card extends Component<Props, State> {
       borderRadius: new Animated.Value(8),
       opacity: new Animated.Value(1),
     };
-    this.cardRef = React.createRef();
   }
 
   componentDidUpdate() {
-    // if (this.state.isExpanded && this.props.modalVisible === true) {
     if (this.state.isExpanded === true && this.props.resultClose === true) {
       Animated.parallel([
         Animated.timing(this.state.width, {
@@ -98,28 +97,30 @@ export default class Card extends Component<Props, State> {
     this.setState({
       isExpanded: true,
     });
-    this.cardRef.current.measure((x, y) => {
-      Animated.timing(this.state.width, {
-        toValue: 307,
-        duration: 400,
-      }).start();
-      Animated.timing(this.state.height, {
-        toValue: 307,
-        duration: 400,
-      }).start();
-      Animated.timing(this.state.x, {
-        toValue: -x + ox - 17,
-        duration: 400,
-      }).start();
-      Animated.timing(this.state.y, {
-        toValue: -y + oy - 145,
-        duration: 400,
-      }).start();
-      Animated.timing(this.state.borderRadius, {
-        toValue: 38,
-        duration: 400,
-      }).start();
-    });
+    if (this.cardRef.current) {
+      this.cardRef.current.measure((x: number, y: number) => {
+        Animated.timing(this.state.width, {
+          toValue: 307,
+          duration: 400,
+        }).start();
+        Animated.timing(this.state.height, {
+          toValue: 307,
+          duration: 400,
+        }).start();
+        Animated.timing(this.state.x, {
+          toValue: -x + ox - 17,
+          duration: 400,
+        }).start();
+        Animated.timing(this.state.y, {
+          toValue: -y + oy - 145,
+          duration: 400,
+        }).start();
+        Animated.timing(this.state.borderRadius, {
+          toValue: 38,
+          duration: 400,
+        }).start();
+      });
+    }
   };
 
   render() {

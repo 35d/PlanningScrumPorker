@@ -33,6 +33,7 @@ interface State {
   modalVisible: boolean;
   point: string;
   opacity: Animated.Value;
+  close: boolean;
 }
 
 export default class Home extends Component<Props, State> {

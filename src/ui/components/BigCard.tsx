@@ -1,5 +1,5 @@
-import React from 'react'
-import { StyleSheet, Text, View, GestureResponderEvent } from 'react-native'
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
 const styles = StyleSheet.create({
   bigCard: {
@@ -17,17 +17,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#00478F',
   },
-})
+});
 
 // TODO 共通化
 interface Card {
-  point: string
+  point: string;
 }
 
 const BigCard = (props: Card) => (
   <View style={styles.bigCard}>
     <Text style={styles.text}>{props.point}</Text>
   </View>
-)
+);
 
-export default BigCard
+export default BigCard;
