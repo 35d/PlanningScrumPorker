@@ -93,6 +93,7 @@ var Home = /** @class */ (function (_super) {
     Home.prototype.render = function () {
         var _this = this;
         return (react_1.default.createElement(react_native_1.View, { style: styles.container },
+            react_1.default.createElement(react_native_1.StatusBar, { barStyle: "light-content" }),
             react_1.default.createElement(react_native_1.Animated.Text, { style: [styles.title, { opacity: this.state.opacity }] }, "Fibonacci"),
             react_1.default.createElement(react_native_1.View, { style: styles.body }, this.renderCards()),
             react_1.default.createElement(react_native_1.Modal, { animationType: "none", transparent: false, visible: this.state.modalVisible, onRequestClose: function () { return console.log('close modal'); } },

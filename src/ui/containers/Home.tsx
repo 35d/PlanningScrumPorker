@@ -1,6 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
-import { Animated, Modal, StyleSheet, Text, View } from 'react-native';
+import { Animated, Modal, StyleSheet, StatusBar, View } from 'react-native';
 import Card from '../components/Card';
 import Ready from '../containers/Ready';
 import fiboArray from '../../util/FiboArray';
@@ -54,7 +54,15 @@ export default class Home extends Component<Props, State> {
   renderCards = () => {
     const cards: Array<JSX.Element> = [];
     fiboArray.forEach(point => {
-      cards.push(<Card point={point} onPress={this.onPressCard} key={point} opacity={this.state.opacity} resultClose={this.state.close} />);
+      cards.push(
+        <Card
+          point={point}
+          onPress={this.onPressCard}
+          key={point}
+          opacity={this.state.opacity}
+          resultClose={this.state.close}
+        />,
+      );
     });
     return cards;
   };
@@ -88,11 +96,13 @@ export default class Home extends Component<Props, State> {
     }, 370);
   };
 
-
   render() {
     return (
       <View style={styles.container}>
-        <Animated.Text style={[styles.title, {opacity: this.state.opacity}]}>Fibonacci</Animated.Text>
+        <StatusBar barStyle="light-content" />
+        <Animated.Text style={[styles.title, { opacity: this.state.opacity }]}>
+          Fibonacci
+        </Animated.Text>
         <View style={styles.body}>{this.renderCards()}</View>
         <Modal
           animationType="none"
