@@ -23,5 +23,5 @@ var styles = react_native_1.StyleSheet.create({
     },
 });
 var BigCard = function (props) { return (react_1.default.createElement(react_native_1.View, { style: styles.bigCard },
-    react_1.default.createElement(react_native_1.Text, { style: styles.text }, props.point))); };
+    react_1.default.createElement(react_native_1.Animated.Text, { style: [styles.text, { opacity: props.textOpacity }] }, props.point))); };
 exports.default = BigCard;

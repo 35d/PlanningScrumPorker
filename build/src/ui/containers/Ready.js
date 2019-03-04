@@ -44,24 +44,37 @@ var styles = react_native_1.StyleSheet.create({
 });
 var ReadyComponent = /** @class */ (function (_super) {
     __extends(ReadyComponent, _super);
-    function ReadyComponent() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function ReadyComponent(props) {
+        var _this = _super.call(this, props) || this;
+        _this.onPressReadyCard = function () {
+            react_native_1.Animated.timing(_this.state.textOpacity, {
+                toValue: 0,
+                duration: 150,
+            }).start();
+            setTimeout(function () {
+                _this.props.navigator.replace({
+                    component: Result_1.default,
+                    passProps: {
+                        onPress: _this.props.onPress,
+                        point: _this.props.point,
+                    },
+                    navigationBarHidden: true,
+                });
+            }, 150);
+        };
+        _this.state = {
+            textOpacity: new react_native_1.Animated.Value(1),
+        };
+        return _this;
     }
     ReadyComponent.prototype.render = function () {
         var _this = this;
         return (react_1.default.createElement(react_native_1.View, { style: styles.container },
             react_1.default.createElement(react_native_1.TouchableWithoutFeedback, { onPress: function () {
-                    return _this.props.navigator.push({
-                        component: Result_1.default,
-                        passProps: {
-                            onPress: _this.props.onPress,
-                            point: _this.props.point,
-                        },
-                        navigationBarHidden: true,
-                    });
+                    _this.onPressReadyCard();
                 } },
                 react_1.default.createElement(react_native_1.View, null,
-                    react_1.default.createElement(BigCard_1.default, { point: 'READY!' })))));
+                    react_1.default.createElement(BigCard_1.default, { point: 'READY!', textOpacity: this.state.textOpacity })))));
     };
     return ReadyComponent;
 }(react_2.Component));

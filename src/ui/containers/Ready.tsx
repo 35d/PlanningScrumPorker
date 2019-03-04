@@ -1,15 +1,14 @@
-import React from 'react'
-import { Component } from 'react'
+import React from 'react';
+import { Component } from 'react';
 import {
   TouchableWithoutFeedback,
   StyleSheet,
-  Text,
   View,
-  GestureResponderEvent,
-} from 'react-native'
-import BigCard from '../components/BigCard'
-import Result from '../containers/Result'
-import { NavigatorIOS } from 'react-native'
+  Animated,
+} from 'react-native';
+import BigCard from '../components/BigCard';
+import Result from '../containers/Result';
+import { NavigatorIOS } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -30,36 +29,57 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
-})
+});
 
 interface Props {
-  point: string
-  navigator?: any
-  onPress: (modalVisible: boolean) => void
+  point: string;
+  navigator?: any;
+  onPress: (modalVisible: boolean) => void;
 }
 
-class ReadyComponent extends Component<Props> {
+interface State {
+  textOpacity: Animated.Value;
+}
+
+class ReadyComponent extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      textOpacity: new Animated.Value(1),
+    };
+  }
+
+  onPressReadyCard = () => {
+    Animated.timing(this.state.textOpacity, {
+      toValue: 0,
+      duration: 150,
+    }).start();
+    setTimeout(() => {
+      this.props.navigator.replace({
+        component: Result,
+        passProps: {
+          onPress: this.props.onPress,
+          point: this.props.point,
+        },
+        navigationBarHidden: true,
+      });
+    }, 150);
+  };
+
   render() {
     return (
       <View style={styles.container}>
         <TouchableWithoutFeedback
-          onPress={() =>
-            this.props.navigator.push({
-              component: Result,
-              passProps: {
-                onPress: this.props.onPress,
-                point: this.props.point,
-              },
-              navigationBarHidden: true,
-            })
-          }
+          onPress={() => {
+            this.onPressReadyCard();
+          }}
         >
           <View>
-            <BigCard point={'READY!'} />
+            <BigCard point={'READY!'} textOpacity={this.state.textOpacity} />
           </View>
         </TouchableWithoutFeedback>
       </View>
-    )
+    );
   }
 }
 
@@ -78,6 +98,6 @@ export default class Ready extends Component<Props> {
         }}
         style={{ flex: 1 }}
       />
-    )
+    );
   }
 }

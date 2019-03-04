@@ -5,6 +5,7 @@ import {
   StyleSheet,
   View,
   GestureResponderEvent,
+  Animated,
 } from 'react-native';
 import BigCard from '../components/BigCard';
 
@@ -34,13 +35,34 @@ interface Props {
   point: string;
 }
 
-export default class Result extends Component<Props> {
+interface State {
+  textOpacity: Animated.Value;
+}
+
+export default class Result extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      textOpacity: new Animated.Value(0),
+    };
+  }
+
+  componentDidMount() {
+    Animated.timing(this.state.textOpacity, {
+      toValue: 1,
+      duration: 150,
+    }).start();
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <TouchableWithoutFeedback onPress={this.props.onPress}>
           <View>
-            <BigCard point={this.props.point} />
+            <BigCard
+              point={this.props.point}
+              textOpacity={this.state.textOpacity}
+            />
           </View>
         </TouchableWithoutFeedback>
       </View>

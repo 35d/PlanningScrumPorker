@@ -42,14 +42,24 @@ var styles = react_native_1.StyleSheet.create({
 });
 var Result = /** @class */ (function (_super) {
     __extends(Result, _super);
-    function Result() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function Result(props) {
+        var _this = _super.call(this, props) || this;
+        _this.state = {
+            textOpacity: new react_native_1.Animated.Value(0),
+        };
+        return _this;
     }
+    Result.prototype.componentDidMount = function () {
+        react_native_1.Animated.timing(this.state.textOpacity, {
+            toValue: 1,
+            duration: 150,
+        }).start();
+    };
     Result.prototype.render = function () {
         return (react_1.default.createElement(react_native_1.View, { style: styles.container },
             react_1.default.createElement(react_native_1.TouchableWithoutFeedback, { onPress: this.props.onPress },
                 react_1.default.createElement(react_native_1.View, null,
-                    react_1.default.createElement(BigCard_1.default, { point: this.props.point })))));
+                    react_1.default.createElement(BigCard_1.default, { point: this.props.point, textOpacity: this.state.textOpacity })))));
     };
     return Result;
 }(react_2.Component));
