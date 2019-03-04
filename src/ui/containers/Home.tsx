@@ -6,6 +6,7 @@ import Ready from '../containers/Ready';
 import fiboArray from '../../util/FiboArray';
 import byteArray from '../../util/ByteArray';
 import squaringArray from '../../util/SquaringArray';
+import tShirtArray from '../../util/TShirtArray';
 
 const styles = StyleSheet.create({
   container: {
@@ -43,9 +44,10 @@ const arrayMap: { [key: string]: Array<string> } = {
   Fibonacci: fiboArray,
   Byte: byteArray,
   Squaring: squaringArray,
+  TShirt: tShirtArray,
 };
 
-const typeArray: Array<string> = ['Fibonacci', 'Byte', 'Squaring'];
+const typeArray: Array<string> = ['Fibonacci', 'Squaring', 'Byte', 'TShirt'];
 
 export default class Home extends Component<Props, State> {
   constructor(props: Props) {

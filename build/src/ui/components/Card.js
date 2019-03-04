@@ -36,7 +36,7 @@ var styles = react_native_1.StyleSheet.create({
         marginBottom: 34,
     },
     text: {
-        fontSize: 38,
+        fontSize: 34,
         fontWeight: 'bold',
         color: '#00478F',
     },

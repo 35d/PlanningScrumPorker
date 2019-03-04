@@ -24,6 +24,7 @@ var Ready_1 = __importDefault(require("../containers/Ready"));
 var FiboArray_1 = __importDefault(require("../../util/FiboArray"));
 var ByteArray_1 = __importDefault(require("../../util/ByteArray"));
 var SquaringArray_1 = __importDefault(require("../../util/SquaringArray"));
+var TShirtArray_1 = __importDefault(require("../../util/TShirtArray"));
 var styles = react_native_1.StyleSheet.create({
     container: {
         flex: 1,
@@ -47,8 +48,9 @@ var arrayMap = {
     Fibonacci: FiboArray_1.default,
     Byte: ByteArray_1.default,
     Squaring: SquaringArray_1.default,
+    TShirt: TShirtArray_1.default,
 };
-var typeArray = ['Fibonacci', 'Byte', 'Squaring'];
+var typeArray = ['Fibonacci', 'Squaring', 'Byte', 'TShirt'];
 var Home = /** @class */ (function (_super) {
     __extends(Home, _super);
     function Home(props) {
