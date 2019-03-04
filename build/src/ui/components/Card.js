@@ -23,7 +23,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importStar(require("react"));
 var react_native_1 = require("react-native");
 var ox = (react_native_1.Dimensions.get('window').width - 307) / 2;
-var oy = (react_native_1.Dimensions.get('window').height - 40 - 307) / 2;
+var oy = (react_native_1.Dimensions.get('window').height - 20 - 307) / 2;
 var styles = react_native_1.StyleSheet.create({
     card: {
         backgroundColor: '#FFF',

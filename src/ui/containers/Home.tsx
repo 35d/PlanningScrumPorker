@@ -4,13 +4,14 @@ import { Animated, Modal, StyleSheet, StatusBar, View } from 'react-native';
 import Card from '../components/Card';
 import Ready from '../containers/Ready';
 import fiboArray from '../../util/FiboArray';
+import byteArray from '../../util/ByteArray';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#00478F',
     alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop: 80,
   },
   title: {
     color: '#FFF',
@@ -34,7 +35,15 @@ interface State {
   point: string;
   opacity: Animated.Value;
   close: boolean;
+  currentIndex: number;
 }
+
+const arrayMap: { [key: string]: Array<string> } = {
+  Fibonacci: fiboArray,
+  Byte: byteArray,
+};
+
+const typeArray: Array<string> = ['Fibonacci', 'Byte'];
 
 export default class Home extends Component<Props, State> {
   constructor(props: Props) {
@@ -44,6 +53,7 @@ export default class Home extends Component<Props, State> {
       point: '',
       opacity: new Animated.Value(1),
       close: false,
+      currentIndex: 0,
     };
   }
 
@@ -53,7 +63,8 @@ export default class Home extends Component<Props, State> {
 
   renderCards = () => {
     const cards: Array<JSX.Element> = [];
-    fiboArray.forEach(point => {
+    const arrayType = typeArray[this.state.currentIndex % typeArray.length];
+    arrayMap[arrayType].forEach(point => {
       cards.push(
         <Card
           point={point}
@@ -100,8 +111,16 @@ export default class Home extends Component<Props, State> {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
-        <Animated.Text style={[styles.title, { opacity: this.state.opacity }]}>
-          Fibonacci
+        <Animated.Text
+          style={[styles.title, { opacity: this.state.opacity }]}
+          onPress={() => {
+            if (this.state.currentIndex === 100) {
+              alert('congratulations!!!');
+            }
+            this.setState({ currentIndex: this.state.currentIndex + 1 });
+          }}
+        >
+          {typeArray[this.state.currentIndex % typeArray.length]}
         </Animated.Text>
         <View style={styles.body}>{this.renderCards()}</View>
         <Modal
