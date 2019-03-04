@@ -23,6 +23,7 @@ var Card_1 = __importDefault(require("../components/Card"));
 var Ready_1 = __importDefault(require("../containers/Ready"));
 var FiboArray_1 = __importDefault(require("../../util/FiboArray"));
 var ByteArray_1 = __importDefault(require("../../util/ByteArray"));
+var SquaringArray_1 = __importDefault(require("../../util/SquaringArray"));
 var styles = react_native_1.StyleSheet.create({
     container: {
         flex: 1,
@@ -45,8 +46,9 @@ var styles = react_native_1.StyleSheet.create({
 var arrayMap = {
     Fibonacci: FiboArray_1.default,
     Byte: ByteArray_1.default,
+    Squaring: SquaringArray_1.default,
 };
-var typeArray = ['Fibonacci', 'Byte'];
+var typeArray = ['Fibonacci', 'Byte', 'Squaring'];
 var Home = /** @class */ (function (_super) {
     __extends(Home, _super);
     function Home(props) {

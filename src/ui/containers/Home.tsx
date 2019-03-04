@@ -5,6 +5,7 @@ import Card from '../components/Card';
 import Ready from '../containers/Ready';
 import fiboArray from '../../util/FiboArray';
 import byteArray from '../../util/ByteArray';
+import squaringArray from '../../util/SquaringArray';
 
 const styles = StyleSheet.create({
   container: {
@@ -41,9 +42,10 @@ interface State {
 const arrayMap: { [key: string]: Array<string> } = {
   Fibonacci: fiboArray,
   Byte: byteArray,
+  Squaring: squaringArray,
 };
 
-const typeArray: Array<string> = ['Fibonacci', 'Byte'];
+const typeArray: Array<string> = ['Fibonacci', 'Byte', 'Squaring'];
 
 export default class Home extends Component<Props, State> {
   constructor(props: Props) {
