@@ -1,7 +1,17 @@
 import React from 'react';
 import { Component } from 'react';
-import { Animated, Modal, StyleSheet, StatusBar, View } from 'react-native';
+import {
+  Animated,
+  Modal,
+  StyleSheet,
+  StatusBar,
+  View,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import Card from '../components/Card';
+import Drawer from '../components/Drawer';
 import Ready from '../containers/Ready';
 import fiboArray from '../../util/FiboArray';
 import byteArray from '../../util/ByteArray';
@@ -26,6 +36,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
+  shadow: {
+    zIndex: 10,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: '#00000055',
+  },
 });
 
 interface Props {
@@ -38,6 +57,8 @@ interface State {
   opacity: Animated.Value;
   close: boolean;
   currentIndex: number;
+  drawerVisible: boolean;
+  drawerPosition: Animated.Value;
 }
 
 const arrayMap: { [key: string]: Array<string> } = {
@@ -58,6 +79,10 @@ export default class Home extends Component<Props, State> {
       opacity: new Animated.Value(1),
       close: false,
       currentIndex: 0,
+      drawerVisible: false,
+      drawerPosition: new Animated.Value(
+        -(Dimensions.get('window').width - 54),
+      ),
     };
   }
 
@@ -111,19 +136,59 @@ export default class Home extends Component<Props, State> {
     }, 370);
   };
 
+  onPressDrawerMenu = (index: number) => {
+    this.setState({ currentIndex: index, drawerVisible: false });
+    Animated.timing(this.state.drawerPosition, {
+      duration: 200,
+      toValue: -(Dimensions.get('window').width - 54),
+    }).start();
+  };
+
   render() {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
-        <Animated.Text
-          style={[styles.title, { opacity: this.state.opacity }]}
-          onPress={() => {
-            if (this.state.currentIndex === 100) {
-              alert('congratulations!!!');
-            }
-            this.setState({ currentIndex: this.state.currentIndex + 1 });
+        <Drawer
+          visible={this.state.drawerVisible}
+          onPress={this.onPressDrawerMenu}
+          position={this.state.drawerPosition}
+          currentIndex={this.state.currentIndex}
+          typeArray={typeArray}
+        />
+        <View
+          style={{
+            position: 'absolute',
+            top: 60,
+            left: 24,
+            justifyContent: 'flex-start',
           }}
         >
+          <TouchableOpacity
+            onPress={() => {
+              this.setState({
+                drawerVisible: true,
+              });
+              Animated.timing(this.state.drawerPosition, {
+                duration: 200,
+                toValue: 0,
+              }).start();
+            }}
+          >
+            <View style={{ width: 45, height: 45 }}>
+              <Image
+                source={require('../../assets/menu.png')}
+                style={{ width: 30, height: 30 }}
+              />
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View
+          style={[
+            styles.shadow,
+            !this.state.drawerVisible && { display: 'none' },
+          ]}
+        />
+        <Animated.Text style={[styles.title, { opacity: this.state.opacity }]}>
           {typeArray[this.state.currentIndex % typeArray.length]}
         </Animated.Text>
         <View style={styles.body}>{this.renderCards()}</View>

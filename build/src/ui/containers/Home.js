@@ -20,6 +20,7 @@ var react_1 = __importDefault(require("react"));
 var react_2 = require("react");
 var react_native_1 = require("react-native");
 var Card_1 = __importDefault(require("../components/Card"));
+var Drawer_1 = __importDefault(require("../components/Drawer"));
 var Ready_1 = __importDefault(require("../containers/Ready"));
 var FiboArray_1 = __importDefault(require("../../util/FiboArray"));
 var ByteArray_1 = __importDefault(require("../../util/ByteArray"));
@@ -42,6 +43,15 @@ var styles = react_native_1.StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'row',
         flexWrap: 'wrap',
+    },
+    shadow: {
+        zIndex: 10,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: '#00000055',
     },
 });
 var arrayMap = {
@@ -90,12 +100,21 @@ var Home = /** @class */ (function (_super) {
                 });
             }, 370);
         };
+        _this.onPressDrawerMenu = function (index) {
+            _this.setState({ currentIndex: index, drawerVisible: false });
+            react_native_1.Animated.timing(_this.state.drawerPosition, {
+                duration: 200,
+                toValue: -(react_native_1.Dimensions.get('window').width - 54),
+            }).start();
+        };
         _this.state = {
             modalVisible: false,
             point: '',
             opacity: new react_native_1.Animated.Value(1),
             close: false,
             currentIndex: 0,
+            drawerVisible: false,
+            drawerPosition: new react_native_1.Animated.Value(-(react_native_1.Dimensions.get('window').width - 54)),
         };
         return _this;
     }
@@ -106,12 +125,29 @@ var Home = /** @class */ (function (_super) {
         var _this = this;
         return (react_1.default.createElement(react_native_1.View, { style: styles.container },
             react_1.default.createElement(react_native_1.StatusBar, { barStyle: "light-content" }),
-            react_1.default.createElement(react_native_1.Animated.Text, { style: [styles.title, { opacity: this.state.opacity }], onPress: function () {
-                    if (_this.state.currentIndex === 100) {
-                        alert('congratulations!!!');
-                    }
-                    _this.setState({ currentIndex: _this.state.currentIndex + 1 });
-                } }, typeArray[this.state.currentIndex % typeArray.length]),
+            react_1.default.createElement(Drawer_1.default, { visible: this.state.drawerVisible, onPress: this.onPressDrawerMenu, position: this.state.drawerPosition, currentIndex: this.state.currentIndex, typeArray: typeArray }),
+            react_1.default.createElement(react_native_1.View, { style: {
+                    position: 'absolute',
+                    top: 60,
+                    left: 24,
+                    justifyContent: 'flex-start',
+                } },
+                react_1.default.createElement(react_native_1.TouchableOpacity, { onPress: function () {
+                        _this.setState({
+                            drawerVisible: true,
+                        });
+                        react_native_1.Animated.timing(_this.state.drawerPosition, {
+                            duration: 200,
+                            toValue: 0,
+                        }).start();
+                    } },
+                    react_1.default.createElement(react_native_1.View, { style: { width: 45, height: 45 } },
+                        react_1.default.createElement(react_native_1.Image, { source: require('../../assets/menu.png'), style: { width: 30, height: 30 } })))),
+            react_1.default.createElement(react_native_1.View, { style: [
+                    styles.shadow,
+                    !this.state.drawerVisible && { display: 'none' },
+                ] }),
+            react_1.default.createElement(react_native_1.Animated.Text, { style: [styles.title, { opacity: this.state.opacity }] }, typeArray[this.state.currentIndex % typeArray.length]),
             react_1.default.createElement(react_native_1.View, { style: styles.body }, this.renderCards()),
             react_1.default.createElement(react_native_1.Modal, { animationType: "none", transparent: false, visible: this.state.modalVisible, onRequestClose: function () { return console.log('close modal'); } },
                 react_1.default.createElement(Ready_1.default, { navigator: this.props.navigator, onPress: function () { return _this.onPressResultCard(false); }, point: this.state.point }))));
