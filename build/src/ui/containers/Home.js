@@ -116,7 +116,11 @@ var Home = /** @class */ (function (_super) {
             }, 370);
         };
         _this.onPressDrawerMenu = function (index) {
-            _this.setState({ currentIndex: index, drawerVisible: false });
+            _this.setState({ currentIndex: index });
+            _this.dismissDrawer();
+        };
+        _this.dismissDrawer = function () {
+            _this.setState({ drawerVisible: false });
             react_native_1.Animated.timing(_this.state.drawerPosition, {
                 duration: 200,
                 toValue: -(react_native_1.Dimensions.get('window').width - 54),
@@ -153,10 +157,11 @@ var Home = /** @class */ (function (_super) {
                     } },
                     react_1.default.createElement(react_native_1.View, { style: styles.iconWrapper },
                         react_1.default.createElement(react_native_1.Image, { source: require('../../assets/menu.png'), style: styles.icon })))),
-            react_1.default.createElement(react_native_1.View, { style: [
-                    styles.drawerShadow,
-                    !this.state.drawerVisible && { display: 'none' },
-                ] }),
+            react_1.default.createElement(react_native_1.TouchableWithoutFeedback, { onPress: this.dismissDrawer },
+                react_1.default.createElement(react_native_1.View, { style: [
+                        styles.drawerShadow,
+                        !this.state.drawerVisible && { display: 'none' },
+                    ] })),
             react_1.default.createElement(react_native_1.Animated.Text, { style: [styles.title, { opacity: this.state.opacity }] }, typeArray[this.state.currentIndex % typeArray.length]),
             react_1.default.createElement(react_native_1.View, { style: styles.body }, this.renderCards()),
             react_1.default.createElement(react_native_1.Modal, { animationType: "none", transparent: false, visible: this.state.modalVisible, onRequestClose: function () { return console.log('close modal'); } },

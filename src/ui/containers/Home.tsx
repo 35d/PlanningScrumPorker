@@ -9,6 +9,7 @@ import {
   Dimensions,
   Image,
   TouchableOpacity,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import Card from '../components/Card';
 import Drawer from '../components/Drawer';
@@ -152,7 +153,12 @@ export default class Home extends Component<Props, State> {
   };
 
   onPressDrawerMenu = (index: number) => {
-    this.setState({ currentIndex: index, drawerVisible: false });
+    this.setState({ currentIndex: index });
+    this.dismissDrawer();
+  };
+
+  dismissDrawer = () => {
+    this.setState({ drawerVisible: false });
     Animated.timing(this.state.drawerPosition, {
       duration: 200,
       toValue: -(Dimensions.get('window').width - 54),
@@ -190,12 +196,14 @@ export default class Home extends Component<Props, State> {
             </View>
           </TouchableOpacity>
         </View>
-        <View
-          style={[
-            styles.drawerShadow,
-            !this.state.drawerVisible && { display: 'none' },
-          ]}
-        />
+        <TouchableWithoutFeedback onPress={this.dismissDrawer}>
+          <View
+            style={[
+              styles.drawerShadow,
+              !this.state.drawerVisible && { display: 'none' },
+            ]}
+          />
+        </TouchableWithoutFeedback>
         <Animated.Text style={[styles.title, { opacity: this.state.opacity }]}>
           {typeArray[this.state.currentIndex % typeArray.length]}
         </Animated.Text>
