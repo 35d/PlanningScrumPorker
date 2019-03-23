@@ -19,6 +19,8 @@ import byteArray from '../../util/ByteArray';
 import squaringArray from '../../util/SquaringArray';
 import tShirtArray from '../../util/TShirtArray';
 
+const drawerWidth = Dimensions.get('window').width - 54;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -161,7 +163,7 @@ export default class Home extends Component<Props, State> {
     this.setState({ drawerVisible: false });
     Animated.timing(this.state.drawerPosition, {
       duration: 200,
-      toValue: -(Dimensions.get('window').width - 54),
+      toValue: -drawerWidth,
     }).start();
   };
 
@@ -174,7 +176,7 @@ export default class Home extends Component<Props, State> {
           onPress={this.onPressDrawerMenu}
           position={this.state.drawerPosition}
           currentIndex={this.state.currentIndex}
-          typeArray={typeArray}
+          data={typeArray}
         />
         <View style={styles.drawerIcon}>
           <TouchableOpacity

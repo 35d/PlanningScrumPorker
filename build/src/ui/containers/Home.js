@@ -26,6 +26,7 @@ var FiboArray_1 = __importDefault(require("../../util/FiboArray"));
 var ByteArray_1 = __importDefault(require("../../util/ByteArray"));
 var SquaringArray_1 = __importDefault(require("../../util/SquaringArray"));
 var TShirtArray_1 = __importDefault(require("../../util/TShirtArray"));
+var drawerWidth = react_native_1.Dimensions.get('window').width - 54;
 var styles = react_native_1.StyleSheet.create({
     container: {
         flex: 1,
@@ -123,7 +124,7 @@ var Home = /** @class */ (function (_super) {
             _this.setState({ drawerVisible: false });
             react_native_1.Animated.timing(_this.state.drawerPosition, {
                 duration: 200,
-                toValue: -(react_native_1.Dimensions.get('window').width - 54),
+                toValue: -drawerWidth,
             }).start();
         };
         _this.state = {
@@ -144,7 +145,7 @@ var Home = /** @class */ (function (_super) {
         var _this = this;
         return (react_1.default.createElement(react_native_1.View, { style: styles.container },
             react_1.default.createElement(react_native_1.StatusBar, { barStyle: "light-content" }),
-            react_1.default.createElement(Drawer_1.default, { visible: this.state.drawerVisible, onPress: this.onPressDrawerMenu, position: this.state.drawerPosition, currentIndex: this.state.currentIndex, typeArray: typeArray }),
+            react_1.default.createElement(Drawer_1.default, { visible: this.state.drawerVisible, onPress: this.onPressDrawerMenu, position: this.state.drawerPosition, currentIndex: this.state.currentIndex, data: typeArray }),
             react_1.default.createElement(react_native_1.View, { style: styles.drawerIcon },
                 react_1.default.createElement(react_native_1.TouchableOpacity, { onPress: function () {
                         _this.setState({

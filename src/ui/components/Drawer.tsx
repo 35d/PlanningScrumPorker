@@ -15,14 +15,16 @@ interface Props {
   onPress: Function;
   position: Animated.Value;
   currentIndex: number;
-  typeArray: Array<string>;
+  data: Array<string>;
 }
+
+const drawerWidth = Dimensions.get('window').width - 54;
 
 const styles = StyleSheet.create({
   container: {
     zIndex: 100,
     backgroundColor: '#FFF',
-    width: Dimensions.get('window').width - 56,
+    width: drawerWidth,
     height: Dimensions.get('window').height,
     position: 'absolute',
     top: 0,
@@ -36,7 +38,7 @@ export default class Drawer extends Component<Props> {
     return (
       <Animated.View style={[styles.container, { left: this.props.position }]}>
         <FlatList
-          data={this.props.typeArray}
+          data={this.props.data}
           keyExtractor={item => item}
           extraData={this.props.currentIndex}
           renderItem={({ item, index }) => {
