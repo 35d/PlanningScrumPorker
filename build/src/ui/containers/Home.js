@@ -44,7 +44,7 @@ var styles = react_native_1.StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
     },
-    shadow: {
+    drawerShadow: {
         zIndex: 10,
         position: 'absolute',
         top: 0,
@@ -52,6 +52,21 @@ var styles = react_native_1.StyleSheet.create({
         right: 0,
         bottom: 0,
         backgroundColor: '#00000055',
+    },
+    drawerIcon: {
+        position: 'absolute',
+        top: 75,
+        left: 24,
+        justifyContent: 'flex-start',
+    },
+    iconWrapper: {
+        width: 45,
+        height: 45,
+    },
+    icon: {
+        width: 40,
+        height: 40,
+        tintColor: '#FFF',
     },
 });
 var arrayMap = {
@@ -126,12 +141,7 @@ var Home = /** @class */ (function (_super) {
         return (react_1.default.createElement(react_native_1.View, { style: styles.container },
             react_1.default.createElement(react_native_1.StatusBar, { barStyle: "light-content" }),
             react_1.default.createElement(Drawer_1.default, { visible: this.state.drawerVisible, onPress: this.onPressDrawerMenu, position: this.state.drawerPosition, currentIndex: this.state.currentIndex, typeArray: typeArray }),
-            react_1.default.createElement(react_native_1.View, { style: {
-                    position: 'absolute',
-                    top: 60,
-                    left: 24,
-                    justifyContent: 'flex-start',
-                } },
+            react_1.default.createElement(react_native_1.View, { style: styles.drawerIcon },
                 react_1.default.createElement(react_native_1.TouchableOpacity, { onPress: function () {
                         _this.setState({
                             drawerVisible: true,
@@ -141,10 +151,10 @@ var Home = /** @class */ (function (_super) {
                             toValue: 0,
                         }).start();
                     } },
-                    react_1.default.createElement(react_native_1.View, { style: { width: 45, height: 45 } },
-                        react_1.default.createElement(react_native_1.Image, { source: require('../../assets/menu.png'), style: { width: 30, height: 30 } })))),
+                    react_1.default.createElement(react_native_1.View, { style: styles.iconWrapper },
+                        react_1.default.createElement(react_native_1.Image, { source: require('../../assets/menu.png'), style: styles.icon })))),
             react_1.default.createElement(react_native_1.View, { style: [
-                    styles.shadow,
+                    styles.drawerShadow,
                     !this.state.drawerVisible && { display: 'none' },
                 ] }),
             react_1.default.createElement(react_native_1.Animated.Text, { style: [styles.title, { opacity: this.state.opacity }] }, typeArray[this.state.currentIndex % typeArray.length]),

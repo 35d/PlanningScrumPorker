@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
-  shadow: {
+  drawerShadow: {
     zIndex: 10,
     position: 'absolute',
     top: 0,
@@ -44,6 +44,21 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     backgroundColor: '#00000055',
+  },
+  drawerIcon: {
+    position: 'absolute',
+    top: 75,
+    left: 24,
+    justifyContent: 'flex-start',
+  },
+  iconWrapper: {
+    width: 45,
+    height: 45,
+  },
+  icon: {
+    width: 40,
+    height: 40,
+    tintColor: '#FFF',
   },
 });
 
@@ -155,14 +170,7 @@ export default class Home extends Component<Props, State> {
           currentIndex={this.state.currentIndex}
           typeArray={typeArray}
         />
-        <View
-          style={{
-            position: 'absolute',
-            top: 60,
-            left: 24,
-            justifyContent: 'flex-start',
-          }}
-        >
+        <View style={styles.drawerIcon}>
           <TouchableOpacity
             onPress={() => {
               this.setState({
@@ -174,17 +182,17 @@ export default class Home extends Component<Props, State> {
               }).start();
             }}
           >
-            <View style={{ width: 45, height: 45 }}>
+            <View style={styles.iconWrapper}>
               <Image
                 source={require('../../assets/menu.png')}
-                style={{ width: 30, height: 30 }}
+                style={styles.icon}
               />
             </View>
           </TouchableOpacity>
         </View>
         <View
           style={[
-            styles.shadow,
+            styles.drawerShadow,
             !this.state.drawerVisible && { display: 'none' },
           ]}
         />
