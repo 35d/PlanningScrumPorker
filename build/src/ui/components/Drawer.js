@@ -28,6 +28,7 @@ var styles = react_native_1.StyleSheet.create({
         height: react_native_1.Dimensions.get('window').height,
         position: 'absolute',
         top: 0,
+        left: -drawerWidth,
         paddingTop: 80,
         paddingHorizontal: 24,
     },
@@ -39,7 +40,10 @@ var Drawer = /** @class */ (function (_super) {
     }
     Drawer.prototype.render = function () {
         var _this = this;
-        return (react_1.default.createElement(react_native_1.Animated.View, { style: [styles.container, { left: this.props.position }] },
+        return (react_1.default.createElement(react_native_1.Animated.View, { style: [
+                styles.container,
+                { transform: [{ translateX: this.props.translateX }] },
+            ] },
             react_1.default.createElement(react_native_1.FlatList, { data: this.props.data, keyExtractor: function (item) { return item; }, extraData: this.props.currentIndex, renderItem: function (_a) {
                     var item = _a.item, index = _a.index;
                     return (react_1.default.createElement(react_native_1.TouchableWithoutFeedback, { onPress: function () { return _this.props.onPress(index); } },

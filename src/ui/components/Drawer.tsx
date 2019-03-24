@@ -13,7 +13,7 @@ import {
 interface Props {
   visible: boolean;
   onPress: Function;
-  position: Animated.Value;
+  translateX: Animated.Value;
   currentIndex: number;
   data: Array<string>;
 }
@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height,
     position: 'absolute',
     top: 0,
+    left: -drawerWidth,
     paddingTop: 80,
     paddingHorizontal: 24,
   },
@@ -36,7 +37,12 @@ const styles = StyleSheet.create({
 export default class Drawer extends Component<Props> {
   render() {
     return (
-      <Animated.View style={[styles.container, { left: this.props.position }]}>
+      <Animated.View
+        style={[
+          styles.container,
+          { transform: [{ translateX: this.props.translateX }] },
+        ]}
+      >
         <FlatList
           data={this.props.data}
           keyExtractor={item => item}

@@ -10,6 +10,7 @@ import {
   Image,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  PanResponder,
 } from 'react-native';
 import Card from '../components/Card';
 import Drawer from '../components/Drawer';
@@ -76,7 +77,7 @@ interface State {
   close: boolean;
   currentIndex: number;
   drawerVisible: boolean;
-  drawerPosition: Animated.Value;
+  drawerTranslateX: Animated.Value;
 }
 
 const arrayMap: { [key: string]: Array<string> } = {
@@ -98,10 +99,20 @@ export default class Home extends Component<Props, State> {
       close: false,
       currentIndex: 0,
       drawerVisible: false,
-      drawerPosition: new Animated.Value(
-        -(Dimensions.get('window').width - 54),
-      ),
+      drawerTranslateX: new Animated.Value(0),
     };
+    this.panResponder = PanResponder.create({
+      onMoveShouldSetPanResponder: (evt, gestureState) => true,
+      onPanResponderMove: (evt, gestureState) => {
+        let dx = gestureState.dx;
+        let dy = gestureState.dy;
+        if (dx > 0 && (dy <= 10 && dy >= -10)) {
+          this.openDrawer();
+        } else if (dx < 0 && (dy <= 10 && dy >= -10)) {
+          this.closeDrawer();
+        }
+      },
+    });
   }
 
   setModalVisible(visible: boolean) {
@@ -156,40 +167,42 @@ export default class Home extends Component<Props, State> {
 
   onPressDrawerMenu = (index: number) => {
     this.setState({ currentIndex: index });
-    this.dismissDrawer();
+    this.closeDrawer();
   };
 
-  dismissDrawer = () => {
+  openDrawer = () => {
+    this.setState({
+      drawerVisible: true,
+    });
+    Animated.timing(this.state.drawerTranslateX, {
+      duration: 200,
+      toValue: drawerWidth,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  closeDrawer = () => {
     this.setState({ drawerVisible: false });
-    Animated.timing(this.state.drawerPosition, {
+    Animated.timing(this.state.drawerTranslateX, {
       duration: 200,
       toValue: -drawerWidth,
+      useNativeDriver: true,
     }).start();
   };
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.container} {...this.panResponder.panHandlers}>
         <StatusBar barStyle="light-content" />
         <Drawer
           visible={this.state.drawerVisible}
           onPress={this.onPressDrawerMenu}
-          position={this.state.drawerPosition}
+          translateX={this.state.drawerTranslateX}
           currentIndex={this.state.currentIndex}
           data={typeArray}
         />
         <View style={styles.drawerIcon}>
-          <TouchableOpacity
-            onPress={() => {
-              this.setState({
-                drawerVisible: true,
-              });
-              Animated.timing(this.state.drawerPosition, {
-                duration: 200,
-                toValue: 0,
-              }).start();
-            }}
-          >
+          <TouchableOpacity onPress={this.openDrawer}>
             <View style={styles.iconWrapper}>
               <Image
                 source={require('../../assets/menu.png')}
@@ -198,7 +211,7 @@ export default class Home extends Component<Props, State> {
             </View>
           </TouchableOpacity>
         </View>
-        <TouchableWithoutFeedback onPress={this.dismissDrawer}>
+        <TouchableWithoutFeedback onPress={this.closeDrawer}>
           <View
             style={[
               styles.drawerShadow,

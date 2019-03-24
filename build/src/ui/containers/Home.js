@@ -12,6 +12,17 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -118,13 +129,24 @@ var Home = /** @class */ (function (_super) {
         };
         _this.onPressDrawerMenu = function (index) {
             _this.setState({ currentIndex: index });
-            _this.dismissDrawer();
+            _this.closeDrawer();
         };
-        _this.dismissDrawer = function () {
+        _this.openDrawer = function () {
+            _this.setState({
+                drawerVisible: true,
+            });
+            react_native_1.Animated.timing(_this.state.drawerTranslateX, {
+                duration: 200,
+                toValue: drawerWidth,
+                useNativeDriver: true,
+            }).start();
+        };
+        _this.closeDrawer = function () {
             _this.setState({ drawerVisible: false });
-            react_native_1.Animated.timing(_this.state.drawerPosition, {
+            react_native_1.Animated.timing(_this.state.drawerTranslateX, {
                 duration: 200,
                 toValue: -drawerWidth,
+                useNativeDriver: true,
             }).start();
         };
         _this.state = {
@@ -134,8 +156,21 @@ var Home = /** @class */ (function (_super) {
             close: false,
             currentIndex: 0,
             drawerVisible: false,
-            drawerPosition: new react_native_1.Animated.Value(-(react_native_1.Dimensions.get('window').width - 54)),
+            drawerTranslateX: new react_native_1.Animated.Value(0),
         };
+        _this.panResponder = react_native_1.PanResponder.create({
+            onMoveShouldSetPanResponder: function (evt, gestureState) { return true; },
+            onPanResponderMove: function (evt, gestureState) {
+                var dx = gestureState.dx;
+                var dy = gestureState.dy;
+                if (dx > 0 && (dy <= 10 && dy >= -10)) {
+                    _this.openDrawer();
+                }
+                else if (dx < 0 && (dy <= 10 && dy >= -10)) {
+                    _this.closeDrawer();
+                }
+            },
+        });
         return _this;
     }
     Home.prototype.setModalVisible = function (visible) {
@@ -143,22 +178,14 @@ var Home = /** @class */ (function (_super) {
     };
     Home.prototype.render = function () {
         var _this = this;
-        return (react_1.default.createElement(react_native_1.View, { style: styles.container },
+        return (react_1.default.createElement(react_native_1.View, __assign({ style: styles.container }, this.panResponder.panHandlers),
             react_1.default.createElement(react_native_1.StatusBar, { barStyle: "light-content" }),
-            react_1.default.createElement(Drawer_1.default, { visible: this.state.drawerVisible, onPress: this.onPressDrawerMenu, position: this.state.drawerPosition, currentIndex: this.state.currentIndex, data: typeArray }),
+            react_1.default.createElement(Drawer_1.default, { visible: this.state.drawerVisible, onPress: this.onPressDrawerMenu, translateX: this.state.drawerTranslateX, currentIndex: this.state.currentIndex, data: typeArray }),
             react_1.default.createElement(react_native_1.View, { style: styles.drawerIcon },
-                react_1.default.createElement(react_native_1.TouchableOpacity, { onPress: function () {
-                        _this.setState({
-                            drawerVisible: true,
-                        });
-                        react_native_1.Animated.timing(_this.state.drawerPosition, {
-                            duration: 200,
-                            toValue: 0,
-                        }).start();
-                    } },
+                react_1.default.createElement(react_native_1.TouchableOpacity, { onPress: this.openDrawer },
                     react_1.default.createElement(react_native_1.View, { style: styles.iconWrapper },
                         react_1.default.createElement(react_native_1.Image, { source: require('../../assets/menu.png'), style: styles.icon })))),
-            react_1.default.createElement(react_native_1.TouchableWithoutFeedback, { onPress: this.dismissDrawer },
+            react_1.default.createElement(react_native_1.TouchableWithoutFeedback, { onPress: this.closeDrawer },
                 react_1.default.createElement(react_native_1.View, { style: [
                         styles.drawerShadow,
                         !this.state.drawerVisible && { display: 'none' },
