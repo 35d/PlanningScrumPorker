@@ -30,17 +30,6 @@ var styles = react_native_1.StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    title: {
-        color: '#FFF',
-        fontSize: 26,
-        fontWeight: 'bold',
-        marginBottom: 45,
-    },
-    body: {
-        justifyContent: 'center',
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-    },
 });
 var ReadyComponent = /** @class */ (function (_super) {
     __extends(ReadyComponent, _super);

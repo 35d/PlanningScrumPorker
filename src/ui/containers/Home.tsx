@@ -101,6 +101,10 @@ export default class Home extends Component<Props, State> {
       drawerVisible: false,
       drawerTranslateX: new Animated.Value(0),
     };
+    this.setPanResponder();
+  }
+
+  setPanResponder = () => {
     this.panResponder = PanResponder.create({
       onMoveShouldSetPanResponder: (evt, gestureState) => true,
       onPanResponderMove: (evt, gestureState) => {
@@ -113,7 +117,7 @@ export default class Home extends Component<Props, State> {
         }
       },
     });
-  }
+  };
 
   setModalVisible(visible: boolean) {
     this.setState({ modalVisible: visible });
@@ -137,6 +141,7 @@ export default class Home extends Component<Props, State> {
   };
 
   onPressCard = (point: string, modalVisible: boolean) => {
+    this.panResponder = {}; // readyとresultにpanResponderが引き継がれるのを防ぐ
     Animated.timing(this.state.opacity, {
       toValue: 0,
       duration: 400,
@@ -150,6 +155,7 @@ export default class Home extends Component<Props, State> {
   };
 
   onPressResultCard = (modalVisible: boolean) => {
+    this.setPanResponder();
     this.setState({
       modalVisible,
       close: true,

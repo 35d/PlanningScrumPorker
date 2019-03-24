@@ -1,5 +1,5 @@
 import React from 'react';
-import {Animated, StyleSheet, View} from 'react-native';
+import { Animated, StyleSheet, View } from 'react-native';
 
 const styles = StyleSheet.create({
   bigCard: {
@@ -13,7 +13,6 @@ const styles = StyleSheet.create({
     marginBottom: 34,
   },
   text: {
-    fontSize: 59,
     fontWeight: 'bold',
     color: '#00478F',
   },
@@ -22,12 +21,23 @@ const styles = StyleSheet.create({
 // TODO 共通化
 interface Card {
   point: string;
+  fontSize?: number;
   textOpacity: Animated.Value;
 }
 
 const BigCard = (props: Card) => (
   <View style={styles.bigCard}>
-    <Animated.Text style={[styles.text, {opacity: props.textOpacity}]}>{props.point}</Animated.Text>
+    <Animated.Text
+      style={[
+        styles.text,
+        {
+          opacity: props.textOpacity,
+          fontSize: props.fontSize ? props.fontSize : 59,
+        },
+      ]}
+    >
+      {props.point}
+    </Animated.Text>
   </View>
 );
 

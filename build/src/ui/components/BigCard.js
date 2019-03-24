@@ -17,11 +17,16 @@ var styles = react_native_1.StyleSheet.create({
         marginBottom: 34,
     },
     text: {
-        fontSize: 59,
         fontWeight: 'bold',
         color: '#00478F',
     },
 });
 var BigCard = function (props) { return (react_1.default.createElement(react_native_1.View, { style: styles.bigCard },
-    react_1.default.createElement(react_native_1.Animated.Text, { style: [styles.text, { opacity: props.textOpacity }] }, props.point))); };
+    react_1.default.createElement(react_native_1.Animated.Text, { style: [
+            styles.text,
+            {
+                opacity: props.textOpacity,
+                fontSize: props.fontSize ? props.fontSize : 59,
+            },
+        ] }, props.point))); };
 exports.default = BigCard;

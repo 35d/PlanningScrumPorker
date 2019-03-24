@@ -28,17 +28,6 @@ var styles = react_native_1.StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    title: {
-        color: '#FFF',
-        fontSize: 26,
-        fontWeight: 'bold',
-        marginBottom: 45,
-    },
-    body: {
-        justifyContent: 'center',
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-    },
 });
 var Result = /** @class */ (function (_super) {
     __extends(Result, _super);
@@ -59,7 +48,7 @@ var Result = /** @class */ (function (_super) {
         return (react_1.default.createElement(react_native_1.View, { style: styles.container },
             react_1.default.createElement(react_native_1.TouchableWithoutFeedback, { onPress: this.props.onPress },
                 react_1.default.createElement(react_native_1.View, null,
-                    react_1.default.createElement(BigCard_1.default, { point: this.props.point, textOpacity: this.state.textOpacity })))));
+                    react_1.default.createElement(BigCard_1.default, { point: this.props.point, fontSize: 140, textOpacity: this.state.textOpacity })))));
     };
     return Result;
 }(react_2.Component));

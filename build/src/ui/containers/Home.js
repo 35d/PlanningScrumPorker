@@ -92,6 +92,21 @@ var Home = /** @class */ (function (_super) {
     __extends(Home, _super);
     function Home(props) {
         var _this = _super.call(this, props) || this;
+        _this.setPanResponder = function () {
+            _this.panResponder = react_native_1.PanResponder.create({
+                onMoveShouldSetPanResponder: function (evt, gestureState) { return true; },
+                onPanResponderMove: function (evt, gestureState) {
+                    var dx = gestureState.dx;
+                    var dy = gestureState.dy;
+                    if (dx > 0 && (dy <= 10 && dy >= -10)) {
+                        _this.openDrawer();
+                    }
+                    else if (dx < 0 && (dy <= 10 && dy >= -10)) {
+                        _this.closeDrawer();
+                    }
+                },
+            });
+        };
         _this.renderCards = function () {
             var cards = [];
             var arrayType = typeArray[_this.state.currentIndex % typeArray.length];
@@ -101,6 +116,7 @@ var Home = /** @class */ (function (_super) {
             return cards;
         };
         _this.onPressCard = function (point, modalVisible) {
+            _this.panResponder = {}; // readyとresultにpanResponderが引き継がれるのを防ぐ
             react_native_1.Animated.timing(_this.state.opacity, {
                 toValue: 0,
                 duration: 400,
@@ -113,6 +129,7 @@ var Home = /** @class */ (function (_super) {
             }, 370);
         };
         _this.onPressResultCard = function (modalVisible) {
+            _this.setPanResponder();
             _this.setState({
                 modalVisible: modalVisible,
                 close: true,
@@ -158,19 +175,7 @@ var Home = /** @class */ (function (_super) {
             drawerVisible: false,
             drawerTranslateX: new react_native_1.Animated.Value(0),
         };
-        _this.panResponder = react_native_1.PanResponder.create({
-            onMoveShouldSetPanResponder: function (evt, gestureState) { return true; },
-            onPanResponderMove: function (evt, gestureState) {
-                var dx = gestureState.dx;
-                var dy = gestureState.dy;
-                if (dx > 0 && (dy <= 10 && dy >= -10)) {
-                    _this.openDrawer();
-                }
-                else if (dx < 0 && (dy <= 10 && dy >= -10)) {
-                    _this.closeDrawer();
-                }
-            },
-        });
+        _this.setPanResponder();
         return _this;
     }
     Home.prototype.setModalVisible = function (visible) {

@@ -18,17 +18,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  title: {
-    color: '#FFF',
-    fontSize: 26,
-    fontWeight: 'bold',
-    marginBottom: 45,
-  },
-  body: {
-    justifyContent: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
 });
 
 interface Props {
