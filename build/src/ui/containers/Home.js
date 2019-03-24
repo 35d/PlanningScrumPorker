@@ -181,7 +181,7 @@ var Home = /** @class */ (function (_super) {
         return (react_1.default.createElement(react_native_1.View, __assign({ style: styles.container }, this.panResponder.panHandlers),
             react_1.default.createElement(react_native_1.StatusBar, { barStyle: "light-content" }),
             react_1.default.createElement(Drawer_1.default, { visible: this.state.drawerVisible, onPress: this.onPressDrawerMenu, translateX: this.state.drawerTranslateX, currentIndex: this.state.currentIndex, data: typeArray }),
-            react_1.default.createElement(react_native_1.View, { style: styles.drawerIcon },
+            react_1.default.createElement(react_native_1.Animated.View, { style: [styles.drawerIcon, { opacity: this.state.opacity }] },
                 react_1.default.createElement(react_native_1.TouchableOpacity, { onPress: this.openDrawer },
                     react_1.default.createElement(react_native_1.View, { style: styles.iconWrapper },
                         react_1.default.createElement(react_native_1.Image, { source: require('../../assets/menu.png'), style: styles.icon })))),

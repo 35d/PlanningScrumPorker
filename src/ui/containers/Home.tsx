@@ -201,7 +201,9 @@ export default class Home extends Component<Props, State> {
           currentIndex={this.state.currentIndex}
           data={typeArray}
         />
-        <View style={styles.drawerIcon}>
+        <Animated.View
+          style={[styles.drawerIcon, { opacity: this.state.opacity }]}
+        >
           <TouchableOpacity onPress={this.openDrawer}>
             <View style={styles.iconWrapper}>
               <Image
@@ -210,7 +212,7 @@ export default class Home extends Component<Props, State> {
               />
             </View>
           </TouchableOpacity>
-        </View>
+        </Animated.View>
         <TouchableWithoutFeedback onPress={this.closeDrawer}>
           <View
             style={[
