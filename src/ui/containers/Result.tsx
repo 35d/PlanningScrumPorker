@@ -61,6 +61,7 @@ export default class Result extends Component<Props, State> {
           <View>
             <BigCard
               point={this.props.point}
+              fontSize={140}
               textOpacity={this.state.textOpacity}
             />
           </View>
