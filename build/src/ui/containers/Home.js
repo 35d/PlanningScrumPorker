@@ -94,7 +94,9 @@ var Home = /** @class */ (function (_super) {
         var _this = _super.call(this, props) || this;
         _this.setPanResponder = function () {
             _this.panResponder = react_native_1.PanResponder.create({
-                onMoveShouldSetPanResponder: function (evt, gestureState) { return true; },
+                onMoveShouldSetPanResponderCapture: function (evt, gestureState) {
+                    return gestureState.dx !== 0 && gestureState.dy !== 0;
+                },
                 onPanResponderMove: function (evt, gestureState) {
                     var dx = gestureState.dx;
                     var dy = gestureState.dy;

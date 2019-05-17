@@ -106,7 +106,8 @@ export default class Home extends Component<Props, State> {
 
   setPanResponder = () => {
     this.panResponder = PanResponder.create({
-      onMoveShouldSetPanResponder: (evt, gestureState) => true,
+      onMoveShouldSetPanResponderCapture: (evt, gestureState) =>
+        gestureState.dx !== 0 && gestureState.dy !== 0,
       onPanResponderMove: (evt, gestureState) => {
         let dx = gestureState.dx;
         let dy = gestureState.dy;
