@@ -92,6 +92,7 @@ var Home = /** @class */ (function (_super) {
     __extends(Home, _super);
     function Home(props) {
         var _this = _super.call(this, props) || this;
+        _this.panResponder = react_native_1.PanResponder.create({});
         _this.setPanResponder = function () {
             _this.panResponder = react_native_1.PanResponder.create({
                 onMoveShouldSetPanResponderCapture: function (evt, gestureState) {

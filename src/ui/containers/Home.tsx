@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   PanResponder,
+  PanResponderInstance,
 } from 'react-native';
 import Card from '../components/Card';
 import Drawer from '../components/Drawer';
@@ -90,6 +91,8 @@ const arrayMap: { [key: string]: Array<string> } = {
 const typeArray: Array<string> = ['Fibonacci', 'Squaring', 'Byte', 'TShirt'];
 
 export default class Home extends Component<Props, State> {
+  panResponder: PanResponderInstance = PanResponder.create({});
+
   constructor(props: Props) {
     super(props);
     this.state = {
