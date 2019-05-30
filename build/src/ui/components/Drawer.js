@@ -40,10 +40,7 @@ var Drawer = /** @class */ (function (_super) {
     }
     Drawer.prototype.render = function () {
         var _this = this;
-        return (react_1.default.createElement(react_native_1.Animated.View, { style: [
-                styles.container,
-                { transform: [{ translateX: this.props.translateX }] },
-            ] },
+        return (react_1.default.createElement(react_native_1.Animated.View, { style: [styles.container, this.props.styleObj] },
             react_1.default.createElement(react_native_1.FlatList, { data: this.props.data, keyExtractor: function (item) { return item; }, extraData: this.props.currentIndex, renderItem: function (_a) {
                     var item = _a.item, index = _a.index;
                     return (react_1.default.createElement(react_native_1.TouchableWithoutFeedback, { onPress: function () { return _this.props.onPress(index); } },
