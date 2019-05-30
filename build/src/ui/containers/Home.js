@@ -144,7 +144,7 @@ var Home = /** @class */ (function (_super) {
             return cards;
         };
         _this.onPressCard = function (point, modalVisible) {
-            _this.panResponder = {}; // readyとresultにpanResponderが引き継がれるのを防ぐ
+            _this.panResponder = react_native_1.PanResponder.create({}); // readyとresultにpanResponderが引き継がれるのを防ぐ
             react_native_1.Animated.timing(_this.state.opacity, {
                 toValue: 0,
                 duration: 400,

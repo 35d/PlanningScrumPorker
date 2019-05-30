@@ -169,7 +169,7 @@ export default class Home extends Component<Props, State> {
   };
 
   onPressCard = (point: string, modalVisible: boolean) => {
-    this.panResponder = {}; // readyとresultにpanResponderが引き継がれるのを防ぐ
+    this.panResponder = PanResponder.create({}); // readyとresultにpanResponderが引き継がれるのを防ぐ
     Animated.timing(this.state.opacity, {
       toValue: 0,
       duration: 400,
