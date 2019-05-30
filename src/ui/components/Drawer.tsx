@@ -13,7 +13,6 @@ import {
 interface Props {
   visible: boolean;
   onPress: Function;
-  translateX: Animated.Value;
   currentIndex: number;
   data: Array<string>;
   styleObj: Object;
@@ -38,13 +37,7 @@ const styles = StyleSheet.create({
 export default class Drawer extends Component<Props> {
   render() {
     return (
-      <Animated.View
-        style={[
-          styles.container,
-          { transform: [{ translateX: this.props.translateX }] },
-          this.props.styleObj,
-        ]}
-      >
+      <Animated.View style={[styles.container, this.props.styleObj]}>
         <FlatList
           data={this.props.data}
           keyExtractor={item => item}

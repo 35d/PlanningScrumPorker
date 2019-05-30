@@ -77,7 +77,6 @@ interface State {
   close: boolean;
   currentIndex: number;
   drawerVisible: boolean;
-  drawerTranslateX: Animated.Value;
   drawerPan: Animated.ValueXY;
 }
 
@@ -100,7 +99,6 @@ export default class Home extends Component<Props, State> {
       close: false,
       currentIndex: 0,
       drawerVisible: false,
-      drawerTranslateX: new Animated.Value(0),
       drawerPan: new Animated.ValueXY(),
     };
     this.state.drawerPan.setValue({ x: -drawerWidth, y: 0 });
@@ -109,20 +107,38 @@ export default class Home extends Component<Props, State> {
 
   setPanResponder = () => {
     this.panResponder = PanResponder.create({
-      // onMoveShouldSetPanResponderCapture: (evt, gestureState) => gestureState.dx !== 0 && gestureState.dy !== 0,
-      onMoveShouldSetPanResponderCapture: () => true,
+      onMoveShouldSetPanResponderCapture: (evt, gestureState) =>
+        gestureState.dx !== 0 && gestureState.dy !== 0,
       onStartShouldSetPanResponder: () => true,
-      onPanResponderMove: Animated.event([
-        null,
-        {
-          dx: this.state.drawerPan.x,
-        },
-      ]),
+      onPanResponderMove: (evt, gestureState) => {
+        // ドロワーが開いている時に、それ以上開けないようにする対応
+        if (this.state.drawerVisible && gestureState.dx > 0) {
+          return;
+        }
+        // ドロワーが閉じている時に、それ以上閉じれないようにする対応
+        if (!this.state.drawerVisible && gestureState.dx < 0) {
+          return;
+        }
+        this.state.drawerPan.setValue({
+          x: this.state.drawerVisible
+            ? gestureState.dx
+            : gestureState.dx - drawerWidth,
+          y: 0,
+        });
+      },
       onPanResponderRelease: (evt, gestureState) => {
-        if (gestureState.dx > 30) {
-          this.openDrawer();
+        if (this.state.drawerVisible) {
+          if (gestureState.dx < -80) {
+            this.closeDrawer();
+          } else {
+            this.openDrawer();
+          }
         } else {
-          this.state.drawerPan.setValue({ x: -drawerWidth, y: 0 });
+          if (gestureState.dx > 80) {
+            this.openDrawer();
+          } else {
+            this.closeDrawer();
+          }
         }
       },
     });
@@ -189,19 +205,19 @@ export default class Home extends Component<Props, State> {
     this.setState({
       drawerVisible: true,
     });
-    Animated.timing(this.state.drawerTranslateX, {
-      duration: 200,
-      toValue: drawerWidth,
-      useNativeDriver: true,
+    Animated.spring(this.state.drawerPan, {
+      toValue: { x: 0, y: 0 },
+      friction: 10,
+      tension: 90,
     }).start();
   };
 
   closeDrawer = () => {
     this.setState({ drawerVisible: false });
-    Animated.timing(this.state.drawerTranslateX, {
-      duration: 200,
-      toValue: -drawerWidth,
-      useNativeDriver: true,
+    Animated.spring(this.state.drawerPan, {
+      toValue: { x: -drawerWidth, y: 0 },
+      friction: 10,
+      tension: 90,
     }).start();
   };
 
@@ -212,7 +228,6 @@ export default class Home extends Component<Props, State> {
         <Drawer
           visible={this.state.drawerVisible}
           onPress={this.onPressDrawerMenu}
-          translateX={this.state.drawerTranslateX}
           currentIndex={this.state.currentIndex}
           data={typeArray}
           styleObj={this.state.drawerPan.getLayout()}

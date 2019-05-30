@@ -94,21 +94,42 @@ var Home = /** @class */ (function (_super) {
         var _this = _super.call(this, props) || this;
         _this.setPanResponder = function () {
             _this.panResponder = react_native_1.PanResponder.create({
-                // onMoveShouldSetPanResponderCapture: (evt, gestureState) => gestureState.dx !== 0 && gestureState.dy !== 0,
-                onMoveShouldSetPanResponderCapture: function () { return true; },
+                onMoveShouldSetPanResponderCapture: function (evt, gestureState) {
+                    return gestureState.dx !== 0 && gestureState.dy !== 0;
+                },
                 onStartShouldSetPanResponder: function () { return true; },
-                onPanResponderMove: react_native_1.Animated.event([
-                    null,
-                    {
-                        dx: _this.state.drawerPan.x,
-                    },
-                ]),
+                onPanResponderMove: function (evt, gestureState) {
+                    // ドロワーが開いている時に、それ以上開けないようにする対応
+                    if (_this.state.drawerVisible && gestureState.dx > 0) {
+                        return;
+                    }
+                    // ドロワーが閉じている時に、それ以上閉じれないようにする対応
+                    if (!_this.state.drawerVisible && gestureState.dx < 0) {
+                        return;
+                    }
+                    _this.state.drawerPan.setValue({
+                        x: _this.state.drawerVisible
+                            ? gestureState.dx
+                            : gestureState.dx - drawerWidth,
+                        y: 0,
+                    });
+                },
                 onPanResponderRelease: function (evt, gestureState) {
-                    if (gestureState.dx > 30) {
-                        _this.openDrawer();
+                    if (_this.state.drawerVisible) {
+                        if (gestureState.dx < -80) {
+                            _this.closeDrawer();
+                        }
+                        else {
+                            _this.openDrawer();
+                        }
                     }
                     else {
-                        _this.state.drawerPan.setValue({ x: -drawerWidth, y: 0 });
+                        if (gestureState.dx > 80) {
+                            _this.openDrawer();
+                        }
+                        else {
+                            _this.closeDrawer();
+                        }
                     }
                 },
             });
@@ -158,18 +179,18 @@ var Home = /** @class */ (function (_super) {
             _this.setState({
                 drawerVisible: true,
             });
-            react_native_1.Animated.timing(_this.state.drawerTranslateX, {
-                duration: 200,
-                toValue: drawerWidth,
-                useNativeDriver: true,
+            react_native_1.Animated.spring(_this.state.drawerPan, {
+                toValue: { x: 0, y: 0 },
+                friction: 10,
+                tension: 90,
             }).start();
         };
         _this.closeDrawer = function () {
             _this.setState({ drawerVisible: false });
-            react_native_1.Animated.timing(_this.state.drawerTranslateX, {
-                duration: 200,
-                toValue: -drawerWidth,
-                useNativeDriver: true,
+            react_native_1.Animated.spring(_this.state.drawerPan, {
+                toValue: { x: -drawerWidth, y: 0 },
+                friction: 10,
+                tension: 90,
             }).start();
         };
         _this.state = {
@@ -179,7 +200,6 @@ var Home = /** @class */ (function (_super) {
             close: false,
             currentIndex: 0,
             drawerVisible: false,
-            drawerTranslateX: new react_native_1.Animated.Value(0),
             drawerPan: new react_native_1.Animated.ValueXY(),
         };
         _this.state.drawerPan.setValue({ x: -drawerWidth, y: 0 });
@@ -193,7 +213,7 @@ var Home = /** @class */ (function (_super) {
         var _this = this;
         return (react_1.default.createElement(react_native_1.View, __assign({ style: styles.container }, this.panResponder.panHandlers),
             react_1.default.createElement(react_native_1.StatusBar, { barStyle: "light-content" }),
-            react_1.default.createElement(Drawer_1.default, { visible: this.state.drawerVisible, onPress: this.onPressDrawerMenu, translateX: this.state.drawerTranslateX, currentIndex: this.state.currentIndex, data: typeArray, styleObj: this.state.drawerPan.getLayout() }),
+            react_1.default.createElement(Drawer_1.default, { visible: this.state.drawerVisible, onPress: this.onPressDrawerMenu, currentIndex: this.state.currentIndex, data: typeArray, styleObj: this.state.drawerPan.getLayout() }),
             react_1.default.createElement(react_native_1.Animated.View, { style: [styles.drawerIcon, { opacity: this.state.opacity }] },
                 react_1.default.createElement(react_native_1.TouchableOpacity, { onPress: this.openDrawer },
                     react_1.default.createElement(react_native_1.View, { style: styles.iconWrapper },
