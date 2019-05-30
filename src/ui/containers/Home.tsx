@@ -78,6 +78,7 @@ interface State {
   currentIndex: number;
   drawerVisible: boolean;
   drawerTranslateX: Animated.Value;
+  drawerPan: Animated.ValueXY;
 }
 
 const arrayMap: { [key: string]: Array<string> } = {
@@ -100,21 +101,28 @@ export default class Home extends Component<Props, State> {
       currentIndex: 0,
       drawerVisible: false,
       drawerTranslateX: new Animated.Value(0),
+      drawerPan: new Animated.ValueXY(),
     };
+    this.state.drawerPan.setValue({ x: -drawerWidth, y: 0 });
     this.setPanResponder();
   }
 
   setPanResponder = () => {
     this.panResponder = PanResponder.create({
-      onMoveShouldSetPanResponderCapture: (evt, gestureState) =>
-        gestureState.dx !== 0 && gestureState.dy !== 0,
-      onPanResponderMove: (evt, gestureState) => {
-        let dx = gestureState.dx;
-        let dy = gestureState.dy;
-        if (dx > 0 && (dy <= 10 && dy >= -10)) {
+      // onMoveShouldSetPanResponderCapture: (evt, gestureState) => gestureState.dx !== 0 && gestureState.dy !== 0,
+      onMoveShouldSetPanResponderCapture: () => true,
+      onStartShouldSetPanResponder: () => true,
+      onPanResponderMove: Animated.event([
+        null,
+        {
+          dx: this.state.drawerPan.x,
+        },
+      ]),
+      onPanResponderRelease: (evt, gestureState) => {
+        if (gestureState.dx > 30) {
           this.openDrawer();
-        } else if (dx < 0 && (dy <= 10 && dy >= -10)) {
-          this.closeDrawer();
+        } else {
+          this.state.drawerPan.setValue({ x: -drawerWidth, y: 0 });
         }
       },
     });
@@ -207,6 +215,7 @@ export default class Home extends Component<Props, State> {
           translateX={this.state.drawerTranslateX}
           currentIndex={this.state.currentIndex}
           data={typeArray}
+          styleObj={this.state.drawerPan.getLayout()}
         />
         <Animated.View
           style={[styles.drawerIcon, { opacity: this.state.opacity }]}

@@ -16,6 +16,7 @@ interface Props {
   translateX: Animated.Value;
   currentIndex: number;
   data: Array<string>;
+  styleObj: Object;
 }
 
 const drawerWidth = Dimensions.get('window').width - 54;
@@ -41,6 +42,7 @@ export default class Drawer extends Component<Props> {
         style={[
           styles.container,
           { transform: [{ translateX: this.props.translateX }] },
+          this.props.styleObj,
         ]}
       >
         <FlatList
