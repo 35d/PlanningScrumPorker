@@ -142,10 +142,6 @@ export default class Home extends Component<Props, State> {
     });
   };
 
-  setModalVisible(visible: boolean) {
-    this.setState({ modalVisible: visible });
-  }
-
   renderCards = () => {
     const cards: Array<JSX.Element> = [];
     const arrayType = typeArray[this.state.currentIndex % typeArray.length];
