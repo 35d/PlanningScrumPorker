@@ -20,6 +20,7 @@ import fiboArray from '../../util/FiboArray';
 import byteArray from '../../util/ByteArray';
 import squaringArray from '../../util/SquaringArray';
 import tShirtArray from '../../util/TShirtArray';
+import { isIPhoneSe } from "../../util/DisplaySize";
 
 const drawerWidth = Dimensions.get('window').width - 54;
 
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#00478F',
     alignItems: 'center',
-    paddingTop: 80,
+    paddingTop: isIPhoneSe() ? 40 : 80,
   },
   title: {
     color: '#FFF',
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
   },
   drawerIcon: {
     position: 'absolute',
-    top: 75,
+    top: isIPhoneSe() ? 35 : 75,
     left: 24,
     justifyContent: 'flex-start',
   },
