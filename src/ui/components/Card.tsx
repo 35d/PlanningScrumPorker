@@ -7,6 +7,7 @@ import {
   View,
   Dimensions,
 } from 'react-native';
+import { isIPhoneSe } from "../../util/DisplaySize";
 
 const ox = (Dimensions.get('window').width - 307) / 2;
 const oy = (Dimensions.get('window').height - 20 - 307) / 2;
@@ -14,16 +15,16 @@ const oy = (Dimensions.get('window').height - 20 - 307) / 2;
 const styles = StyleSheet.create({
   card: {
     backgroundColor: '#FFF',
-    height: 77,
-    width: 77,
+    height: isIPhoneSe() ? 66 : 77,
+    width: isIPhoneSe() ? 66 : 77,
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
     marginHorizontal: 17, // TODO 画面サイズからカードのwidth * 3を引いた値から計算する
-    marginBottom: 34,
+    marginBottom: isIPhoneSe() ? 20 : 34,
   },
   text: {
-    fontSize: 34,
+    fontSize: isIPhoneSe() ? 24 : 34,
     fontWeight: 'bold',
     color: '#00478F',
   },
@@ -52,8 +53,8 @@ export default class Card extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      width: new Animated.Value(77),
-      height: new Animated.Value(77),
+      width: new Animated.Value(isIPhoneSe() ? 66 : 77),
+      height: new Animated.Value(isIPhoneSe() ? 66 : 77),
       isExpanded: false,
       x: new Animated.Value(0),
       y: new Animated.Value(0),
@@ -66,11 +67,11 @@ export default class Card extends Component<Props, State> {
     if (this.state.isExpanded === true && this.props.resultClose === true) {
       Animated.parallel([
         Animated.timing(this.state.width, {
-          toValue: 77,
+          toValue: isIPhoneSe() ? 66 : 77,
           duration: 400,
         }),
         Animated.timing(this.state.height, {
-          toValue: 77,
+          toValue: isIPhoneSe() ? 66 : 77,
           duration: 400,
         }),
         Animated.timing(this.state.x, {
