@@ -15,10 +15,7 @@ import {
 import Card from '../components/Card';
 import Drawer from '../components/Drawer';
 import Ready from '../containers/Ready';
-import fiboArray from '../../util/FiboArray';
-import byteArray from '../../util/ByteArray';
-import squaringArray from '../../util/SquaringArray';
-import tShirtArray from '../../util/TShirtArray';
+import { CardArray } from '../../util/CardArray';
 import { Size } from '../../util/Size';
 
 const styles = StyleSheet.create({
@@ -80,10 +77,10 @@ interface State {
 }
 
 const arrayMap: { [key: string]: Array<string> } = {
-  Fibonacci: fiboArray,
-  Byte: byteArray,
-  Squaring: squaringArray,
-  TShirt: tShirtArray,
+  Fibonacci: CardArray.fibonacci,
+  Byte: CardArray.byte,
+  Squaring: CardArray.squaring,
+  TShirt: CardArray.tShirt,
 };
 
 const typeArray: Array<string> = ['Fibonacci', 'Squaring', 'Byte', 'TShirt'];
