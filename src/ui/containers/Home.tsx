@@ -6,7 +6,6 @@ import {
   StyleSheet,
   StatusBar,
   View,
-  Dimensions,
   Image,
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -20,8 +19,7 @@ import fiboArray from '../../util/FiboArray';
 import byteArray from '../../util/ByteArray';
 import squaringArray from '../../util/SquaringArray';
 import tShirtArray from '../../util/TShirtArray';
-
-const drawerWidth = Dimensions.get('window').width - 54;
+import { Size } from '../../util/Size';
 
 const styles = StyleSheet.create({
   container: {
@@ -104,7 +102,7 @@ export default class Home extends Component<Props, State> {
       drawerVisible: false,
       drawerPan: new Animated.ValueXY(),
     };
-    this.state.drawerPan.setValue({ x: -drawerWidth, y: 0 });
+    this.state.drawerPan.setValue({ x: -Size.drawerWidth, y: 0 });
     this.setPanResponder();
   }
 
@@ -125,7 +123,7 @@ export default class Home extends Component<Props, State> {
         this.state.drawerPan.setValue({
           x: this.state.drawerVisible
             ? gestureState.dx
-            : gestureState.dx - drawerWidth,
+            : gestureState.dx - Size.drawerWidth,
           y: 0,
         });
       },
@@ -218,7 +216,7 @@ export default class Home extends Component<Props, State> {
   closeDrawer = () => {
     this.setState({ drawerVisible: false });
     Animated.spring(this.state.drawerPan, {
-      toValue: { x: -drawerWidth, y: 0 },
+      toValue: { x: -Size.drawerWidth, y: 0 },
       friction: 10,
       tension: 90,
     }).start();
