@@ -20,7 +20,7 @@ import fiboArray from '../../util/FiboArray';
 import byteArray from '../../util/ByteArray';
 import squaringArray from '../../util/SquaringArray';
 import tShirtArray from '../../util/TShirtArray';
-import { isIPhoneSe } from "../../util/DisplaySize";
+import { isIPhoneSe } from '../../util/DisplaySize';
 
 const drawerWidth = Dimensions.get('window').width - 54;
 

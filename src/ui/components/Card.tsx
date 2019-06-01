@@ -7,7 +7,7 @@ import {
   View,
   Dimensions,
 } from 'react-native';
-import { isIPhoneSe } from "../../util/DisplaySize";
+import { isIPhoneSe } from '../../util/DisplaySize';
 
 const ox = (Dimensions.get('window').width - 307) / 2;
 const oy = (Dimensions.get('window').height - 20 - 307) / 2;
