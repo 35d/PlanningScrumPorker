@@ -10,7 +10,8 @@ import {
 import { isIPhoneSe } from '../../util/DisplaySize';
 
 const ox = (Dimensions.get('window').width - 307) / 2;
-const oy = (Dimensions.get('window').height - 20 - 307) / 2;
+const oy = isIPhoneSe() ?
+    (Dimensions.get('window').height + 40 - 307) / 2 : (Dimensions.get('window').height - 20 - 307) / 2;
 
 const styles = StyleSheet.create({
   card: {
