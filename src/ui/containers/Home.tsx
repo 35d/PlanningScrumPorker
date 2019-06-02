@@ -109,12 +109,7 @@ export default class Home extends Component<Props, State> {
         gestureState.dx !== 0 && gestureState.dy !== 0,
       onStartShouldSetPanResponder: () => true,
       onPanResponderMove: (evt, gestureState) => {
-        // ドロワーが開いている時に、それ以上開けないようにする対応
-        if (this.state.drawerVisible && gestureState.dx > 0) {
-          return;
-        }
-        // ドロワーが閉じている時に、それ以上閉じれないようにする対応
-        if (!this.state.drawerVisible && gestureState.dx < 0) {
+        if (this.canNotMoveDrawer(gestureState.dx)) {
           return;
         }
         this.state.drawerPan.setValue({
@@ -140,6 +135,14 @@ export default class Home extends Component<Props, State> {
         }
       },
     });
+  };
+
+  canNotMoveDrawer = (dx: number) => {
+    // 限界を超えて「ドロワーを開く」 or 「閉じようとしている」場合に false を返す
+    return (
+      (this.state.drawerVisible && dx > 0) ||
+      (!this.state.drawerVisible && dx < 0)
+    );
   };
 
   renderCards = () => {
