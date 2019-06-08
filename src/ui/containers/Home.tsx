@@ -17,16 +17,14 @@ import Drawer from '../components/Drawer';
 import Ready from '../containers/Ready';
 import { CardArray } from '../../util/CardArray';
 import { Size } from '../../util/Size';
-import { isIPhoneSe } from '../../util/DisplaySize';
-
-const drawerWidth = Dimensions.get('window').width - 54;
+import { isIPhoneSE } from '../../util/DisplaySize';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#00478F',
     alignItems: 'center',
-    paddingTop: isIPhoneSe() ? 40 : 80,
+    paddingTop: isIPhoneSE() ? 40 : 80,
   },
   title: {
     color: '#FFF',
@@ -50,7 +48,7 @@ const styles = StyleSheet.create({
   },
   drawerIcon: {
     position: 'absolute',
-    top: isIPhoneSe() ? 35 : 75,
+    top: isIPhoneSE() ? 35 : 75,
     left: 24,
     justifyContent: 'flex-start',
   },
