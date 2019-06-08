@@ -1,25 +1,22 @@
 import React from 'react';
 import { Component } from 'react';
 import {
-  Animated,
-  Modal,
-  StyleSheet,
-  StatusBar,
-  View,
-  Dimensions,
-  Image,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  PanResponder,
-  PanResponderInstance,
+    Animated,
+    Modal,
+    StyleSheet,
+    StatusBar,
+    View,
+    Image,
+    TouchableOpacity,
+    TouchableWithoutFeedback,
+    PanResponder,
+    PanResponderInstance, Dimensions,
 } from 'react-native';
 import Card from '../components/Card';
 import Drawer from '../components/Drawer';
 import Ready from '../containers/Ready';
-import fiboArray from '../../util/FiboArray';
-import byteArray from '../../util/ByteArray';
-import squaringArray from '../../util/SquaringArray';
-import tShirtArray from '../../util/TShirtArray';
+import { CardArray } from '../../util/CardArray';
+import { Size } from '../../util/Size';
 import { isIPhoneSe } from '../../util/DisplaySize';
 
 const drawerWidth = Dimensions.get('window').width - 54;
@@ -83,10 +80,10 @@ interface State {
 }
 
 const arrayMap: { [key: string]: Array<string> } = {
-  Fibonacci: fiboArray,
-  Byte: byteArray,
-  Squaring: squaringArray,
-  TShirt: tShirtArray,
+  Fibonacci: CardArray.fibonacci,
+  Byte: CardArray.byte,
+  Squaring: CardArray.squaring,
+  TShirt: CardArray.tShirt,
 };
 
 const typeArray: Array<string> = ['Fibonacci', 'Squaring', 'Byte', 'TShirt'];
@@ -105,7 +102,7 @@ export default class Home extends Component<Props, State> {
       drawerVisible: false,
       drawerPan: new Animated.ValueXY(),
     };
-    this.state.drawerPan.setValue({ x: -drawerWidth, y: 0 });
+    this.state.drawerPan.setValue({ x: -Size.drawerWidth, y: 0 });
     this.setPanResponder();
   }
 
@@ -115,18 +112,13 @@ export default class Home extends Component<Props, State> {
         gestureState.dx !== 0 && gestureState.dy !== 0,
       onStartShouldSetPanResponder: () => true,
       onPanResponderMove: (evt, gestureState) => {
-        // ドロワーが開いている時に、それ以上開けないようにする対応
-        if (this.state.drawerVisible && gestureState.dx > 0) {
-          return;
-        }
-        // ドロワーが閉じている時に、それ以上閉じれないようにする対応
-        if (!this.state.drawerVisible && gestureState.dx < 0) {
+        if (this.canNotMoveDrawer(gestureState.dx)) {
           return;
         }
         this.state.drawerPan.setValue({
           x: this.state.drawerVisible
             ? gestureState.dx
-            : gestureState.dx - drawerWidth,
+            : gestureState.dx - Size.drawerWidth,
           y: 0,
         });
       },
@@ -148,9 +140,13 @@ export default class Home extends Component<Props, State> {
     });
   };
 
-  setModalVisible(visible: boolean) {
-    this.setState({ modalVisible: visible });
-  }
+  canNotMoveDrawer = (dx: number) => {
+    // 限界を超えて「ドロワーを開く」 or 「閉じようとしている」場合に false を返す
+    return (
+      (this.state.drawerVisible && dx > 0) ||
+      (!this.state.drawerVisible && dx < 0)
+    );
+  };
 
   renderCards = () => {
     const cards: Array<JSX.Element> = [];
@@ -219,7 +215,7 @@ export default class Home extends Component<Props, State> {
   closeDrawer = () => {
     this.setState({ drawerVisible: false });
     Animated.spring(this.state.drawerPan, {
-      toValue: { x: -drawerWidth, y: 0 },
+      toValue: { x: -Size.drawerWidth, y: 0 },
       friction: 10,
       tension: 90,
     }).start();

@@ -9,6 +9,7 @@ import {
   Dimensions,
   FlatList,
 } from 'react-native';
+import { Size } from '../../util/Size';
 
 interface Props {
   visible: boolean;
@@ -18,17 +19,15 @@ interface Props {
   styleObj: Object;
 }
 
-const drawerWidth = Dimensions.get('window').width - 54;
-
 const styles = StyleSheet.create({
   container: {
     zIndex: 100,
     backgroundColor: '#FFF',
-    width: drawerWidth,
+    width: Size.drawerWidth,
     height: Dimensions.get('window').height,
     position: 'absolute',
     top: 0,
-    left: -drawerWidth,
+    left: -Size.drawerWidth,
     paddingTop: 80,
     paddingHorizontal: 24,
   },
