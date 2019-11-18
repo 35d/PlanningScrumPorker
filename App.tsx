@@ -7,36 +7,6 @@ import { View, Text } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
-class Hello extends React.Component {
-  static navigationOptions = {
-    title: 'Home',
-  };
-
-  didFocusSubscription = this.props.navigation.addListener(
-    'willBlur',
-    payload => {
-      console.log('@@@@@@@@@@@ willBlur');
-    },
-  );
-
-  render() {
-    return (
-      <View>
-        <Text>Heloooooooo</Text>
-        <Text
-          style={{ marginTop: 20, fontSize: 20, fontWeight: 'bold' }}
-          onPress={() => {
-            this.props.navigation.push('Detail');
-            this.didFocusSubscription.remove();
-          }}
-        >
-          to Detail
-        </Text>
-      </View>
-    );
-  }
-}
-
 const AppNavigator = createStackNavigator(
   {
     Home,
