@@ -170,21 +170,14 @@ export default class Home extends Component<Props, State> {
       duration: 400,
     }).start();
     setTimeout(() => {
-      this.setState({
-        // modalVisible,
-        point,
-      });
       this.props.navigation.push('Ready', {
         onPress: () => this.onPressResultCard(false),
-        point: this.state.point,
+        point,
       });
-    }, 370);
+    }, 400);
   };
 
   onPressResultCard = (modalVisible: boolean) => {
-    console.log('=== onPressResultCard ===');
-    console.log(modalVisible);
-    this.setPanResponder();
     this.props.navigation.popToTop();
     setTimeout(() => {
       this.setState({
@@ -194,10 +187,11 @@ export default class Home extends Component<Props, State> {
         toValue: 1,
         duration: 400,
       }).start();
+      this.setPanResponder();
       this.setState({
         close: false,
       });
-    }, 500);
+    }, 0);
   };
 
   onPressDrawerMenu = (index: number) => {
@@ -260,18 +254,6 @@ export default class Home extends Component<Props, State> {
           {typeArray[this.state.currentIndex % typeArray.length]}
         </Animated.Text>
         <View style={styles.body}>{this.renderCards()}</View>
-        <Modal
-          animationType="none"
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => console.log('close modal')}
-        >
-          <Ready
-            navigation={this.props.navigation}
-            onPress={() => this.onPressResultCard(false)}
-            point={this.state.point}
-          />
-        </Modal>
       </View>
     );
   }
