@@ -63,7 +63,8 @@ const styles = StyleSheet.create({
 });
 
 interface Props {
-  navigator: any;
+  // navigator: any;
+  navigation: any;
 }
 
 interface State {
@@ -170,13 +171,19 @@ export default class Home extends Component<Props, State> {
     }).start();
     setTimeout(() => {
       this.setState({
-        modalVisible,
+        // modalVisible,
         point,
+      });
+      this.props.navigation.navigate('Ready', {
+        onPress: () => this.onPressResultCard(false),
+        point: this.state.point,
       });
     }, 370);
   };
 
   onPressResultCard = (modalVisible: boolean) => {
+    console.log('=== onPressResultCard ===');
+    console.log(modalVisible);
     this.setPanResponder();
     this.setState({
       modalVisible,
@@ -260,7 +267,7 @@ export default class Home extends Component<Props, State> {
           onRequestClose={() => console.log('close modal')}
         >
           <Ready
-            navigator={this.props.navigator}
+            navigation={this.props.navigation}
             onPress={() => this.onPressResultCard(false)}
             point={this.state.point}
           />

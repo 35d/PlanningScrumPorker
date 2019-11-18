@@ -34,6 +34,8 @@ export default class Result extends Component<Props, State> {
     this.state = {
       textOpacity: new Animated.Value(0),
     };
+    console.log('=== Result ===');
+    console.log(props);
   }
 
   componentDidMount() {
@@ -46,10 +48,12 @@ export default class Result extends Component<Props, State> {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableWithoutFeedback onPress={this.props.onPress}>
+        <TouchableWithoutFeedback
+          onPress={this.props.navigation.getParam('onPress', null)}
+        >
           <View>
             <BigCard
-              point={this.props.point}
+              point={this.props.navigation.getParam('point', null)}
               fontSize={140}
               textOpacity={this.state.textOpacity}
             />

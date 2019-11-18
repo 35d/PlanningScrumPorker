@@ -30,12 +30,18 @@ interface State {
   textOpacity: Animated.Value;
 }
 
-class ReadyComponent extends Component<Props, State> {
+export default class ReadyComponent extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
       textOpacity: new Animated.Value(1),
     };
+    console.log('=== Ready ===');
+    console.log(props);
+    const onPress = this.props.navigation.getParam('onPress', null);
+    console.log(onPress);
+    const point = this.props.navigation.getParam('point', null);
+    console.log(point);
   }
 
   onPressReadyCard = () => {
@@ -44,13 +50,9 @@ class ReadyComponent extends Component<Props, State> {
       duration: 150,
     }).start();
     setTimeout(() => {
-      this.props.navigator.replace({
-        component: Result,
-        passProps: {
-          onPress: this.props.onPress,
-          point: this.props.point,
-        },
-        navigationBarHidden: true,
+      this.props.navigation.push('Result', {
+        onPress: this.props.navigation.getParam('onPress', null),
+        point: this.props.navigation.getParam('point', null),
       });
     }, 150);
   };
@@ -68,25 +70,6 @@ class ReadyComponent extends Component<Props, State> {
           </View>
         </TouchableWithoutFeedback>
       </View>
-    );
-  }
-}
-
-export default class Ready extends Component<Props> {
-  render() {
-    return (
-      <NavigatorIOS
-        initialRoute={{
-          component: ReadyComponent,
-          title: '',
-          passProps: {
-            onPress: this.props.onPress,
-            point: this.props.point,
-          },
-          navigationBarHidden: true,
-        }}
-        style={{ flex: 1 }}
-      />
     );
   }
 }
