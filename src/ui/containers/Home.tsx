@@ -197,6 +197,7 @@ export default class Home extends Component<Props, State> {
       this.setState({
         close: false,
       });
+      this.props.navigation.navigate('Home');
     }, 370);
   };
 
