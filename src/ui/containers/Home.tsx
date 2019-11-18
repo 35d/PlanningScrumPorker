@@ -206,7 +206,7 @@ export default class Home extends Component<Props, State> {
     Animated.spring(this.state.drawerPan, {
       toValue: { x: 0, y: 0 },
       friction: 10,
-      tension: 90,
+      tension: 60,
     }).start();
   };
 
@@ -215,7 +215,7 @@ export default class Home extends Component<Props, State> {
     Animated.spring(this.state.drawerPan, {
       toValue: { x: -Size.drawerWidth, y: 0 },
       friction: 10,
-      tension: 90,
+      tension: 60,
     }).start();
   };
 
