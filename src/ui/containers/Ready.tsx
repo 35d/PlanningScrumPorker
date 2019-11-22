@@ -36,12 +36,8 @@ export default class ReadyComponent extends Component<Props, State> {
     this.state = {
       textOpacity: new Animated.Value(1),
     };
-    console.log('=== Ready ===');
-    console.log(props);
     const onPress = this.props.navigation.getParam('onPress', null);
-    console.log(onPress);
     const point = this.props.navigation.getParam('point', null);
-    console.log(point);
   }
 
   onPressReadyCard = () => {

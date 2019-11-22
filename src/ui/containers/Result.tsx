@@ -34,8 +34,6 @@ export default class Result extends Component<Props, State> {
     this.state = {
       textOpacity: new Animated.Value(0),
     };
-    console.log('=== Result ===');
-    console.log(props);
   }
 
   componentDidMount() {

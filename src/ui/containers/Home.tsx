@@ -1,16 +1,17 @@
 import React from 'react';
 import { Component } from 'react';
 import {
-    Animated,
-    Modal,
-    StyleSheet,
-    StatusBar,
-    View,
-    Image,
-    TouchableOpacity,
-    TouchableWithoutFeedback,
-    PanResponder,
-    PanResponderInstance, Dimensions,
+  Animated,
+  Modal,
+  StyleSheet,
+  StatusBar,
+  View,
+  Image,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  PanResponder,
+  PanResponderInstance,
+  Dimensions,
 } from 'react-native';
 import Card from '../components/Card';
 import Drawer from '../components/Drawer';
@@ -64,7 +65,6 @@ const styles = StyleSheet.create({
 });
 
 interface Props {
-  // navigator: any;
   navigation: any;
 }
 
