@@ -1,29 +1,30 @@
 import React from 'react';
 import { Component } from 'react';
 import {
-  Animated,
-  Modal,
-  StyleSheet,
-  StatusBar,
-  View,
-  Image,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  PanResponder,
-  PanResponderInstance,
+    Animated,
+    Modal,
+    StyleSheet,
+    StatusBar,
+    View,
+    Image,
+    TouchableOpacity,
+    TouchableWithoutFeedback,
+    PanResponder,
+    PanResponderInstance, Dimensions,
 } from 'react-native';
 import Card from '../components/Card';
 import Drawer from '../components/Drawer';
 import Ready from '../containers/Ready';
 import { CardArray } from '../../util/CardArray';
 import { Size } from '../../util/Size';
+import { isIPhoneSE } from '../../util/DisplaySize';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#00478F',
     alignItems: 'center',
-    paddingTop: 80,
+    paddingTop: isIPhoneSE() ? 40 : 80,
   },
   title: {
     color: '#FFF',
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
   },
   drawerIcon: {
     position: 'absolute',
-    top: 75,
+    top: isIPhoneSE() ? 35 : 75,
     left: 24,
     justifyContent: 'flex-start',
   },

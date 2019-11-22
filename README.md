@@ -10,6 +10,7 @@ yarn start
 # TypeScript
 ```
 yarn tsc // => typescript compile ./src/*.ts or ./src/*.tsx
+yarn tsc -w // watch mode
 ```
 
 # ドキュメント
