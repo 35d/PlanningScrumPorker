@@ -7,6 +7,11 @@ import {
   GestureResponderEvent,
   Animated,
 } from 'react-native';
+import {
+  NavigationParams,
+  NavigationScreenProp,
+  NavigationState,
+} from 'react-navigation';
 import BigCard from '../components/BigCard';
 
 const styles = StyleSheet.create({
@@ -22,6 +27,7 @@ const styles = StyleSheet.create({
 interface Props {
   onPress: (event: GestureResponderEvent) => void;
   point: string;
+  navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
 
 interface State {

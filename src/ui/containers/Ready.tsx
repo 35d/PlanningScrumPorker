@@ -6,9 +6,12 @@ import {
   View,
   Animated,
 } from 'react-native';
+import {
+  NavigationParams,
+  NavigationScreenProp,
+  NavigationState,
+} from 'react-navigation';
 import BigCard from '../components/BigCard';
-import Result from '../containers/Result';
-import { NavigatorIOS } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -22,8 +25,8 @@ const styles = StyleSheet.create({
 
 interface Props {
   point: string;
-  navigator?: any;
   onPress: (modalVisible: boolean) => void;
+  navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
 
 interface State {
