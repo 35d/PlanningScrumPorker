@@ -1,16 +1,17 @@
 import React from 'react';
 import { Component } from 'react';
 import {
-    Animated,
-    Modal,
-    StyleSheet,
-    StatusBar,
-    View,
-    Image,
-    TouchableOpacity,
-    TouchableWithoutFeedback,
-    PanResponder,
-    PanResponderInstance, Dimensions,
+  Animated,
+  Modal,
+  StyleSheet,
+  StatusBar,
+  View,
+  Image,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  PanResponder,
+  PanResponderInstance,
+  Dimensions,
 } from 'react-native';
 import Card from '../components/Card';
 import Drawer from '../components/Drawer';
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
 });
 
 interface Props {
-  navigator: any;
+  navigation: any;
 }
 
 interface State {
@@ -170,28 +171,28 @@ export default class Home extends Component<Props, State> {
       duration: 400,
     }).start();
     setTimeout(() => {
-      this.setState({
-        modalVisible,
+      this.props.navigation.push('Ready', {
+        onPress: () => this.onPressResultCard(false),
         point,
       });
-    }, 370);
+    }, 400);
   };
 
   onPressResultCard = (modalVisible: boolean) => {
-    this.setPanResponder();
-    this.setState({
-      modalVisible,
-      close: true,
-    });
+    this.props.navigation.popToTop();
     setTimeout(() => {
+      this.setState({
+        close: true,
+      });
       Animated.timing(this.state.opacity, {
         toValue: 1,
         duration: 400,
       }).start();
+      this.setPanResponder();
       this.setState({
         close: false,
       });
-    }, 370);
+    }, 0);
   };
 
   onPressDrawerMenu = (index: number) => {
@@ -206,7 +207,7 @@ export default class Home extends Component<Props, State> {
     Animated.spring(this.state.drawerPan, {
       toValue: { x: 0, y: 0 },
       friction: 10,
-      tension: 90,
+      tension: 60,
     }).start();
   };
 
@@ -215,7 +216,7 @@ export default class Home extends Component<Props, State> {
     Animated.spring(this.state.drawerPan, {
       toValue: { x: -Size.drawerWidth, y: 0 },
       friction: 10,
-      tension: 90,
+      tension: 60,
     }).start();
   };
 
@@ -254,18 +255,6 @@ export default class Home extends Component<Props, State> {
           {typeArray[this.state.currentIndex % typeArray.length]}
         </Animated.Text>
         <View style={styles.body}>{this.renderCards()}</View>
-        <Modal
-          animationType="none"
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => console.log('close modal')}
-        >
-          <Ready
-            navigator={this.props.navigator}
-            onPress={() => this.onPressResultCard(false)}
-            point={this.state.point}
-          />
-        </Modal>
       </View>
     );
   }

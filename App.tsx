@@ -1,19 +1,33 @@
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import Home from './src/ui/containers/Home';
-import { NavigatorIOS } from 'react-native';
+import Ready from './src/ui/containers/Ready';
+import Result from './src/ui/containers/Result';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+
+const AppNavigator = createStackNavigator(
+  {
+    Home,
+    Ready,
+    Result,
+  },
+  {
+    initialRouteName: 'Home',
+    headerMode: 'none',
+    transitionConfig: () => ({
+      screenInterpolator: () => null,
+      transitionSpec: {
+        duration: 0,
+      },
+    }),
+  },
+);
+
+const AppContainer = createAppContainer(AppNavigator);
 
 const App = function app() {
-  return (
-    <NavigatorIOS
-      initialRoute={{
-        component: Home,
-        title: '',
-        navigationBarHidden: true,
-      }}
-      style={{ flex: 1 }}
-    />
-  );
+  return <AppContainer />;
 };
 
 export default App;

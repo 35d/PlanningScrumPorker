@@ -7,6 +7,11 @@ import {
   GestureResponderEvent,
   Animated,
 } from 'react-native';
+import {
+  NavigationParams,
+  NavigationScreenProp,
+  NavigationState,
+} from 'react-navigation';
 import BigCard from '../components/BigCard';
 
 const styles = StyleSheet.create({
@@ -22,6 +27,7 @@ const styles = StyleSheet.create({
 interface Props {
   onPress: (event: GestureResponderEvent) => void;
   point: string;
+  navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
 
 interface State {
@@ -46,10 +52,12 @@ export default class Result extends Component<Props, State> {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableWithoutFeedback onPress={this.props.onPress}>
+        <TouchableWithoutFeedback
+          onPress={this.props.navigation.getParam('onPress', null)}
+        >
           <View>
             <BigCard
-              point={this.props.point}
+              point={this.props.navigation.getParam('point', null)}
               fontSize={140}
               textOpacity={this.state.textOpacity}
             />
